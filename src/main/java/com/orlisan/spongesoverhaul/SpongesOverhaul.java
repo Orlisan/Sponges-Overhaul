@@ -1,6 +1,7 @@
 package com.orlisan.spongesoverhaul;
 
 import com.orlisan.spongesoverhaul.blocks.SpongeBlocks;
+import com.orlisan.spongesoverhaul.blocks.blockEntities.SpongeBlockEntities;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ public class SpongesOverhaul implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 		SpongeBlocks.register();
+		SpongeBlockEntities.register();
 
 		LOGGER.info("Hello Fabric world!");
 	}

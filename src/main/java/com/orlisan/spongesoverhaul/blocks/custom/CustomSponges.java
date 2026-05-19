@@ -57,7 +57,7 @@ public class CustomSponges extends Block implements EntityBlock{
     public Block getType() {return type;}
     public void setType(Block type) {this.type = type;}
     public TagKey<Block> getTypes() {return types;}
-    public void setTypes(TagKey<Block> types) {types = types;}
+    public void setTypes(TagKey<Block> types) {this.types = types;}
     public boolean isATag() {return isATag;}
     public Item getOutput() {return onOutput;}
     public Block getWET_SPONGE(){return WET_SPONGE;};

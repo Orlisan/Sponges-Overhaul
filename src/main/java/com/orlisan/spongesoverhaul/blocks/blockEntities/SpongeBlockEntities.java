@@ -11,12 +11,16 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class SpongeBlockEntities {
-    public static final BlockEntityType<@NotNull CustomSpongeBlockEntity> CUSTOM_SPONGE_BLOCK_ENTITY =
-            Registry.register(
-                    BuiltInRegistries.BLOCK_ENTITY_TYPE,
-                    Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "custom_sponge_block_entity"),
-                    FabricBlockEntityTypeBuilder.create(CustomSpongeBlockEntity::new, SpongeBlocks.SPONGE_BLOCK).build()
-            );
+    public static BlockEntityType<CustomSpongeBlockEntity> CUSTOM_SPONGE_BLOCK_ENTITY;
 
-    public static void register() {}
+    public static void register() {
+        CUSTOM_SPONGE_BLOCK_ENTITY = Registry.register(
+                BuiltInRegistries.BLOCK_ENTITY_TYPE,
+                Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "custom_sponge_block_entity"),
+                FabricBlockEntityTypeBuilder.create(
+                        CustomSpongeBlockEntity::new,
+                        SpongeBlocks.SPONGE_BLOCK
+                ).build()
+        );
+    }
 }
