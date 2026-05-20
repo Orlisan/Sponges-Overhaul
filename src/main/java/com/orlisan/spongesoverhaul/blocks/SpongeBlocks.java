@@ -17,6 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.WaterFluid;
 
 public class SpongeBlocks {
 
@@ -37,7 +38,7 @@ public class SpongeBlocks {
 
         SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, dryId,
                 new CustomSponges(BlockBehaviour.Properties.of().setId(dryKey),
-                        Blocks.WATER, Items.WATER_BUCKET, WET_SPONGE_BLOCK));
+                        WaterFluid.class, Items.WATER_BUCKET, WET_SPONGE_BLOCK));
 
         Registry.register(BuiltInRegistries.ITEM, wetId,
                 new BlockItem(WET_SPONGE_BLOCK, new Item.Properties().setId(wetItemKey)));

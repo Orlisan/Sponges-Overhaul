@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import static com.orlisan.spongesoverhaul.blocks.custom.CustomSponges.MAX_COOLDOWN;
 
 public class CustomSpongeBlockEntity extends BlockEntity {
-    public int MAX_COUNT = 65;
-    public int MAX_DEPTH = 6;
+    public int ORIGINAL_MAX_COUNT = 65;
+    public int ORIGINAL_MAX_DEPTH = 6;
+    public int MAX_COUNT = ORIGINAL_MAX_COUNT;
+    public int MAX_DEPTH = ORIGINAL_MAX_DEPTH;
     public CustomSpongeBlockEntity(BlockPos worldPosition, BlockState blockState) {
         super(SpongeBlockEntities.CUSTOM_SPONGE_BLOCK_ENTITY, worldPosition, blockState);
     }
