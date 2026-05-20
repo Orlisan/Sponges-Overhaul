@@ -36,7 +36,7 @@ public class CustomWetSponges extends Block {
 
     protected void onPlace(final BlockState state, final Level level, final BlockPos pos, final BlockState oldState, final boolean movedByPiston) {
         if ((Boolean)level.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pos)) {
-            level.setBlock(pos, Blocks.SPONGE.defaultBlockState(), 3);
+            level.setBlock(pos, this.getDryVersion().getBlock().defaultBlockState(), 3);
             level.levelEvent(2009, pos, 0);
             level.playSound((Entity)null, pos, SoundEvents.WET_SPONGE_DRIES, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
         }

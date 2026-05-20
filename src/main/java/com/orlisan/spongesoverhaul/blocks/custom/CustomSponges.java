@@ -1,6 +1,7 @@
 package com.orlisan.spongesoverhaul.blocks.custom;
 
 import com.orlisan.spongesoverhaul.blocks.blockEntities.CustomSpongeBlockEntity;
+import com.orlisan.spongesoverhaul.blocks.blockEntities.SpongeBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -236,26 +237,37 @@ public class CustomSponges extends Block implements EntityBlock {
         }
         super.neighborChanged(state, level, pos, block, orientation, movedByPiston);
     }
-
+    @SuppressWarnings("unchecked")
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-        return (lvl, pos, st, be) -> ((CustomSpongeBlockEntity) be).tick(lvl, pos, st);
+        if (type == SpongeBlockEntities.CUSTOM_SPONGE_BLOCK_ENTITY) {
+            return (BlockEntityTicker<T>) (BlockEntityTicker<@NotNull CustomSpongeBlockEntity>)
+                    (lvl, pos, st, be) -> be.tick(lvl, pos, st);
+        }
+        return null;
     }
 
     public void tryAbsorbWater(final Level level, final BlockPos pos) {
-        if (this.removeWaterBreadthFirstSearch(level, pos)) {
-            if (level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity && !blockEntity.isInABigCube) {
-                level.setBlock(pos, WET_SPONGE.defaultBlockState(), 2);
-            } else {
-                if (level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity && !blockEntity.bigCubePos.isEmpty()) {
-                    for (BlockPos MiniCubePos : blockEntity.bigCubePos) {
-                        level.setBlock(MiniCubePos, WET_SPONGE.defaultBlockState(), 2);
-                    }
-                }
-            }
-            level.playSound((Entity) null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
-        }
+        if (!(level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity)) return;
 
+        boolean absorbed = false;
+
+        if (blockEntity.isInABigCube && blockEntity.bigCubePos != null) {
+            for (BlockPos cubePos : blockEntity.bigCubePos) {
+                if (this.removeWaterBreadthFirstSearch(level, cubePos)) absorbed = true;
+            }
+            if (absorbed) {
+                for (BlockPos cubePos : blockEntity.bigCubePos) {
+                    level.setBlock(cubePos, WET_SPONGE.defaultBlockState(), 2);
+                }
+                level.playSound((Entity) null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
+            }
+        } else {
+            if (this.removeWaterBreadthFirstSearch(level, pos)) {
+                level.setBlock(pos, WET_SPONGE.defaultBlockState(), 2);
+                level.playSound((Entity) null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
+            }
+        }
     }
 
     private boolean removeWaterBreadthFirstSearch(final Level level, final BlockPos startPos) {
@@ -302,7 +314,7 @@ public class CustomSponges extends Block implements EntityBlock {
                         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                     }
                 } else {
-                    if (fluidState.getType().getClass() == fluidClass) {
+                    if (fluidClass.isInstance(fluidState.getType())) {
                         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                     } else {
                         if (!state.is(Blocks.KELP) && !state.is(Blocks.KELP_PLANT) && !state.is(Blocks.SEAGRASS) && !state.is(Blocks.TALL_SEAGRASS)) {
@@ -327,18 +339,16 @@ public class CustomSponges extends Block implements EntityBlock {
     }
 
     @Override
-    public void destroy(final LevelAccessor level, final BlockPos pos, final BlockState state) {
+    public void destroy(final LevelAccessor level, final @NotNull BlockPos pos, final @NotNull BlockState state) {
         if (level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity) {
             if (blockEntity.isInABigCube) {
-                for (BlockPos entityPos : blockEntity.bigCubePos) {
+                ArrayList<BlockPos> copy = new ArrayList<>(blockEntity.bigCubePos);
+                for (BlockPos entityPos : copy) {
                     if (level.getBlockEntity(entityPos) instanceof CustomSpongeBlockEntity otherBlockEntity) {
                         otherBlockEntity.isInABigCube = false;
                         otherBlockEntity.MAX_COUNT = otherBlockEntity.ORIGINAL_MAX_COUNT;
                         otherBlockEntity.MAX_DEPTH = otherBlockEntity.ORIGINAL_MAX_DEPTH;
-                        if (otherBlockEntity != blockEntity) {
-                            //Dovrebbe evitare CuncurrentModificationException
-                            otherBlockEntity.bigCubePos = null;
-                        }
+                        otherBlockEntity.bigCubePos = null;
                     }
                 }
             }
