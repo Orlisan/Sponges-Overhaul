@@ -6,6 +6,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.ArrayList;
+
 import static com.orlisan.spongesoverhaul.blocks.custom.CustomSponges.MAX_COOLDOWN;
 
 public class CustomSpongeBlockEntity extends BlockEntity {
@@ -17,6 +19,8 @@ public class CustomSpongeBlockEntity extends BlockEntity {
     public boolean startCooldown = false;
     public boolean FINISHED_COOLDOWN = false;
     public int cooldown = MAX_COOLDOWN;
+    public boolean isInABigCube = false;
+    public ArrayList<BlockPos> bigCubePos = new ArrayList<BlockPos>();
     public void tick(Level level, BlockPos pos, BlockState state) {
         if(startCooldown) {
             cooldown--;

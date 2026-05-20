@@ -24,47 +24,27 @@ public class SpongeBlocks {
     public static Block SPONGE_BLOCK;
 
     public static void register() {
-
         Identifier wetId = Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "wet_sponge_block");
         Identifier dryId = Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "sponge_block");
 
         ResourceKey<Block> wetKey = ResourceKey.create(Registries.BLOCK, wetId);
         ResourceKey<Block> dryKey = ResourceKey.create(Registries.BLOCK, dryId);
-
         ResourceKey<Item> wetItemKey = ResourceKey.create(Registries.ITEM, wetId);
         ResourceKey<Item> dryItemKey = ResourceKey.create(Registries.ITEM, dryId);
 
-        WET_SPONGE_BLOCK = Registry.register(
-                BuiltInRegistries.BLOCK,
-                wetId,
-                new CustomWetSponges(BlockBehaviour.Properties.of().setId(wetKey))
-        );
+        WET_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, wetId,
+                new CustomWetSponges(BlockBehaviour.Properties.of().setId(wetKey)));
 
-        SPONGE_BLOCK = Registry.register(
-                BuiltInRegistries.BLOCK,
-                dryId,
-                new CustomSponges(
-                        BlockBehaviour.Properties.of().setId(dryKey),
-                        Blocks.WATER,
-                        Items.WATER_BUCKET,
-                        WET_SPONGE_BLOCK
-                )
-        );
+        SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, dryId,
+                new CustomSponges(BlockBehaviour.Properties.of().setId(dryKey),
+                        Blocks.WATER, Items.WATER_BUCKET, WET_SPONGE_BLOCK));
 
-        Registry.register(
-                BuiltInRegistries.ITEM,
-                wetId,
-                new BlockItem(WET_SPONGE_BLOCK, new Item.Properties().setId(wetItemKey))
-        );
+        Registry.register(BuiltInRegistries.ITEM, wetId,
+                new BlockItem(WET_SPONGE_BLOCK, new Item.Properties().setId(wetItemKey)));
 
-        Registry.register(
-                BuiltInRegistries.ITEM,
-                dryId,
-                new BlockItem(SPONGE_BLOCK, new Item.Properties().setId(dryItemKey))
-        );
+        BlockItem dryBlockItem = new BlockItem(SPONGE_BLOCK, new Item.Properties().setId(dryItemKey));
+        Registry.register(BuiltInRegistries.ITEM, dryId, dryBlockItem);
 
-        ((CustomWetSponges) WET_SPONGE_BLOCK).setDryVersion(
-                new BlockItem(SPONGE_BLOCK, new Item.Properties().setId(dryItemKey))
-        );
+        ((CustomWetSponges) WET_SPONGE_BLOCK).setDryVersion(dryBlockItem);
     }
 }

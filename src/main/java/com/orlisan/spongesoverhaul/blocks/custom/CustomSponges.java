@@ -1,18 +1,12 @@
 package com.orlisan.spongesoverhaul.blocks.custom;
 
-import com.mojang.serialization.MapCodec;
 import com.orlisan.spongesoverhaul.blocks.blockEntities.CustomSpongeBlockEntity;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
@@ -61,7 +55,6 @@ public class CustomSponges extends Block implements EntityBlock{
     public boolean isATag() {return isATag;}
     public Item getOutput() {return onOutput;}
     public Block getWET_SPONGE(){return WET_SPONGE;};
-
     protected void onPlace(final BlockState state, final Level level, final BlockPos pos, final BlockState oldState, final boolean movedByPiston) {
         if (!oldState.is(state.getBlock()) && !movedByPiston) {
             if(level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity) blockEntity.startCooldown();
@@ -123,15 +116,16 @@ public class CustomSponges extends Block implements EntityBlock{
                     trovati++;
                 }
             }
+            ArrayList<BlockPos> bigCubePos = new ArrayList<BlockPos>();
             if(trovati == 7) {
                 for(CustomSpongeBlockEntity blockEntity: blockEntities) {
                     blockEntity.stopCooldown();
-                    if(blockEntity.getBlockState().getBlock() instanceof CustomSponges sponge) {
-                        level.setBlock(blockEntity.getBlockPos(), sponge.getWET_SPONGE().defaultBlockState(), 2);
-                    }
+                    bigCubePos.add(blockEntity.getBlockPos());
                 }
                 blockEntities.getFirst().MAX_COUNT *= 8;
                 blockEntities.getFirst().MAX_DEPTH *= 4;
+                blockEntities.getFirst().isInABigCube = true;
+                blockEntities.getFirst().bigCubePos = bigCubePos;
                 this.tryAbsorbWater(level, pos);
             }
         }
@@ -150,7 +144,15 @@ public class CustomSponges extends Block implements EntityBlock{
 
     public void tryAbsorbWater(final Level level, final BlockPos pos) {
         if (this.removeWaterBreadthFirstSearch(level, pos)) {
+            if(level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity && !blockEntity.isInABigCube) {
             level.setBlock(pos, WET_SPONGE.defaultBlockState(), 2);
+            }else{
+                if(level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity &&! blockEntity.bigCubePos.isEmpty()) {
+                    for(BlockPos MiniCubePos: blockEntity.bigCubePos) {
+                        level.setBlock(MiniCubePos, WET_SPONGE.defaultBlockState(), 2);
+                    }
+                }
+            }
             level.playSound((Entity)null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
 
