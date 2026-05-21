@@ -9,7 +9,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import org.jetbrains.annotations.NotNull;
 
 
 public class SpongeBlockEntities {
@@ -27,7 +26,7 @@ public class SpongeBlockEntities {
                 Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "custom_sponge_block_entity"),
                 FabricBlockEntityTypeBuilder.create(
                         CustomSpongeBlockEntity::new,
-                        SpongeBlocks.SPONGE_BLOCK
+                        SpongeBlocks.WATER_SPONGE_BLOCK
                 ).build()  // <-- passa il key qui
         );
     }
