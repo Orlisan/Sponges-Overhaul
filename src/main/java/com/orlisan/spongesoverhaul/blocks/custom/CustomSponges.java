@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -20,15 +21,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.redstone.Orientation;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
-import static com.orlisan.spongesoverhaul.SpongesOverhaul.LOGGER;
-
 import java.util.ArrayList;
+
+import static com.orlisan.spongesoverhaul.SpongesOverhaul.LOGGER;
 
 public class CustomSponges extends Block implements EntityBlock {
 
@@ -40,12 +40,12 @@ public class CustomSponges extends Block implements EntityBlock {
     private boolean isAClass = false;
     private final Item onOutput;
     private final Block WET_SPONGE;
-    private Class<? extends Fluid> fluidClass = null;
+    private Class<?> fluidClass = null;
     private int CUSTOM_COUNT = 0;
     private int CUSTOM_DEPTH = 0;
     private boolean hasCustomConfigurations = false;
 
-    public CustomSponges(Properties properties, Class<? extends Fluid> fluidClass, Item onOutput, Block wetSponge, int[] configurazioni) {
+    public CustomSponges(Properties properties, Class<?> fluidClass, Item onOutput, Block wetSponge, int... configurazioni) {
         super(properties);
         settaConfigurazioniCustom(configurazioni);
         isATag = false;
@@ -55,7 +55,7 @@ public class CustomSponges extends Block implements EntityBlock {
         this.isAClass = true;
     }
 
-    public CustomSponges(Properties properties, Class<? extends Fluid> fluidClass, Item onOutput, Block wetSponge) {
+    public CustomSponges(Properties properties, Class<?> fluidClass, Item onOutput, Block wetSponge) {
         super(properties);
         isATag = false;
         this.onOutput = onOutput;
@@ -64,7 +64,7 @@ public class CustomSponges extends Block implements EntityBlock {
         this.isAClass = true;
     }
 
-    public CustomSponges(Properties properties, TagKey<Block> types, Item onOutput, Block wetSponge, int[] customCountAndDepth) {
+    public CustomSponges(Properties properties, TagKey<Block> types, Item onOutput, Block wetSponge, int... customCountAndDepth) {
         super(properties);
         settaConfigurazioniCustom(customCountAndDepth);
         isATag = true;
@@ -81,7 +81,7 @@ public class CustomSponges extends Block implements EntityBlock {
         this.WET_SPONGE = wetSponge;
     }
 
-    public CustomSponges(Properties properties, Block type, Item onOutput, Block wetSponge, int[] configurazioni) {
+    public CustomSponges(Properties properties, Block type, Item onOutput, Block wetSponge, int... configurazioni) {
         super(properties);
         settaConfigurazioniCustom(configurazioni);
         isATag = false;
@@ -98,7 +98,7 @@ public class CustomSponges extends Block implements EntityBlock {
         this.WET_SPONGE = wetSponge;
     }
 
-    public void settaConfigurazioniCustom(int[] configurazioni) {
+    public void settaConfigurazioniCustom(int... configurazioni) {
         if (configurazioni.length >= 3) {
             LOGGER.info("[Sponges Overhaul] Le Configurazioni Specificate non rientrano nei limiti logici, verranno presi in considerazione solo i primi 2");
         } else if (configurazioni.length == 1) {
@@ -147,7 +147,7 @@ public class CustomSponges extends Block implements EntityBlock {
         if (!oldState.is(state.getBlock()) && !movedByPiston) {
             if (level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity) {
                 blockEntity.startCooldown();
-                if(hasCustomConfigurations) {
+                if (hasCustomConfigurations) {
                     blockEntity.ORIGINAL_MAX_COUNT = CUSTOM_COUNT;
                     blockEntity.ORIGINAL_MAX_DEPTH = CUSTOM_DEPTH;
                     blockEntity.MAX_COUNT = blockEntity.ORIGINAL_MAX_COUNT;
@@ -237,6 +237,7 @@ public class CustomSponges extends Block implements EntityBlock {
         }
         super.neighborChanged(state, level, pos, block, orientation, movedByPiston);
     }
+
     @SuppressWarnings("unchecked")
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
@@ -339,7 +340,7 @@ public class CustomSponges extends Block implements EntityBlock {
     }
 
     @Override
-    public void destroy(final LevelAccessor level, final @NotNull BlockPos pos, final @NotNull BlockState state) {
+    public @NotNull BlockState playerWillDestroy(final Level level, final @NotNull BlockPos pos, final @NotNull BlockState state, final @NotNull Player player) {
         if (level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity) {
             if (blockEntity.isInABigCube) {
                 ArrayList<BlockPos> copy = new ArrayList<>(blockEntity.bigCubePos);
@@ -354,6 +355,7 @@ public class CustomSponges extends Block implements EntityBlock {
             }
             blockEntity.bigCubePos = null;
         }
+        return super.playerWillDestroy(level, pos, state, player);
     }
 
     public int getCUSTOM_DEPTH() {

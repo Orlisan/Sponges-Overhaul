@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class SpongeBlockEntities {
+    private SpongeBlockEntities(){}
     public static BlockEntityType<CustomSpongeBlockEntity> CUSTOM_SPONGE_BLOCK_ENTITY;
 
     public static void register() {

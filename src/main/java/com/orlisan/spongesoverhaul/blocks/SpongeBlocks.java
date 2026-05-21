@@ -23,6 +23,7 @@ public class SpongeBlocks {
 
     public static Block WET_SPONGE_BLOCK;
     public static Block SPONGE_BLOCK;
+    private SpongeBlocks(){}
 
     public static void register() {
         Identifier wetId = Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "wet_sponge_block");
@@ -38,7 +39,7 @@ public class SpongeBlocks {
 
         SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, dryId,
                 new CustomSponges(BlockBehaviour.Properties.of().setId(dryKey),
-                        WaterFluid.class, Items.WATER_BUCKET, WET_SPONGE_BLOCK));
+                        WaterFluid.class, Items.WATER_BUCKET, WET_SPONGE_BLOCK, 1000, 30));
 
         Registry.register(BuiltInRegistries.ITEM, wetId,
                 new BlockItem(WET_SPONGE_BLOCK, new Item.Properties().setId(wetItemKey)));
