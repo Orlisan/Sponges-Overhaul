@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "spongesoverhaul:block/sponge_block"
-  }
+  "parent": "spongesoverhaul:block/sponge_block"
 }

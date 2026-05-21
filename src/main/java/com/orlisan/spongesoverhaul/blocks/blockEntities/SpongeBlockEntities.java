@@ -26,7 +26,8 @@ public class SpongeBlockEntities {
                 Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "custom_sponge_block_entity"),
                 FabricBlockEntityTypeBuilder.create(
                         CustomSpongeBlockEntity::new,
-                        SpongeBlocks.WATER_SPONGE_BLOCK
+                        SpongeBlocks.WATER_SPONGE_BLOCK,
+                        SpongeBlocks.LAVA_SPONGE_BLOCK
                 ).build()  // <-- passa il key qui
         );
     }

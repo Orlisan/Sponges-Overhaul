@@ -294,38 +294,40 @@ public class CustomSponges extends Block implements EntityBlock {
                     if (state.is(type)) {
                         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                     } else {
-                        if (!state.is(Blocks.KELP) && !state.is(Blocks.KELP_PLANT) && !state.is(Blocks.SEAGRASS) && !state.is(Blocks.TALL_SEAGRASS)) {
+                        if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) || state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
+                            BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+                            dropResources(state, level, pos, blockEntity);
+                            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                        } else {
                             return BlockPos.TraversalNodeStatus.SKIP;
                         }
-
-                        BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
-                        dropResources(state, level, pos, blockEntity);
-                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                     }
                 } else if (isATag) {
                     if (state.is(types)) {
                         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                     } else {
-                        if (!state.is(Blocks.KELP) && !state.is(Blocks.KELP_PLANT) && !state.is(Blocks.SEAGRASS) && !state.is(Blocks.TALL_SEAGRASS)) {
+                        if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) || state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
+                            BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+                            dropResources(state, level, pos, blockEntity);
+                            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                        } else {
                             return BlockPos.TraversalNodeStatus.SKIP;
                         }
-
-                        BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
-                        dropResources(state, level, pos, blockEntity);
-                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                     }
                 } else {
                     if (fluidClass.isInstance(fluidState.getType())) {
                         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                     } else {
-                        if (!state.is(Blocks.KELP) && !state.is(Blocks.KELP_PLANT) && !state.is(Blocks.SEAGRASS) && !state.is(Blocks.TALL_SEAGRASS)) {
+                        if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) ||
+                                state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
+                            BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+                            dropResources(state, level, pos, blockEntity);
+                            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                        } else {
                             return BlockPos.TraversalNodeStatus.SKIP;
                         }
-
-                        BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
-                        dropResources(state, level, pos, blockEntity);
-                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                     }
+
                 }
 
                 return BlockPos.TraversalNodeStatus.ACCEPT;
