@@ -8,12 +8,16 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Array;
 
 
 public class SpongeBlockEntities {
     private SpongeBlockEntities(){}
-    public static BlockEntityType<CustomSpongeBlockEntity> CUSTOM_SPONGE_BLOCK_ENTITY;
+    public static BlockEntityType<@NotNull CustomSpongeBlockEntity> CUSTOM_SPONGE_BLOCK_ENTITY;
 
     public static void register() {
         ResourceKey<BlockEntityType<?>> key = ResourceKey.create(
@@ -26,8 +30,7 @@ public class SpongeBlockEntities {
                 Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "custom_sponge_block_entity"),
                 FabricBlockEntityTypeBuilder.create(
                         CustomSpongeBlockEntity::new,
-                        SpongeBlocks.WATER_SPONGE_BLOCK,
-                        SpongeBlocks.LAVA_SPONGE_BLOCK
+                        SpongeBlocks.spongeBlocks.toArray(new Block[0])
                 ).build()  // <-- passa il key qui
         );
     }

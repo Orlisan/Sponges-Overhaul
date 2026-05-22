@@ -2,7 +2,9 @@ package com.orlisan.spongesoverhaul.blocks.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -17,13 +19,16 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class CustomWetSponges extends Block {
     private BlockItem dryVersion = null;
-    public CustomWetSponges(Properties properties, BlockItem dryVersion) {
+    private final SimpleParticleType particleTypes;
+    public CustomWetSponges(Properties properties, BlockItem dryVersion, SimpleParticleType particleTypes) {
         super(properties);
         this.dryVersion = dryVersion;
+        this.particleTypes = particleTypes;
     }
 
-    public CustomWetSponges(Properties properties) {
+    public CustomWetSponges(Properties properties, SimpleParticleType particleTypes) {
         super(properties);
+        this.particleTypes = particleTypes;
     }
 
     public BlockItem getDryVersion() {
@@ -75,7 +80,7 @@ public class CustomWetSponges extends Block {
                     }
                 }
 
-                level.addParticle(ParticleTypes.DRIPPING_WATER, xx, yy, zz, (double)0.0F, (double)0.0F, (double)0.0F);
+                level.addParticle(particleTypes, xx, yy, zz, (double)0.0F, (double)0.0F, (double)0.0F);
             }
         }
     }

@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 
-import static com.orlisan.spongesoverhaul.blocks.custom.CustomSponges.MAX_COOLDOWN;
 
 public class CustomSpongeBlockEntity extends BlockEntity {
     public int ORIGINAL_MAX_COUNT = 65;
@@ -20,6 +19,7 @@ public class CustomSpongeBlockEntity extends BlockEntity {
     }
     public boolean startCooldown = false;
     public boolean FINISHED_COOLDOWN = false;
+    public int MAX_COOLDOWN = 5;
     public int cooldown = MAX_COOLDOWN;
     public boolean isInABigCube = false;
     public ArrayList<BlockPos> bigCubePos = new ArrayList<BlockPos>();

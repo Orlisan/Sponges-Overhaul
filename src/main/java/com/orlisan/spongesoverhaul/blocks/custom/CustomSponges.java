@@ -8,14 +8,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -154,6 +151,16 @@ public class CustomSponges extends Block implements EntityBlock {
                     blockEntity.MAX_DEPTH = blockEntity.ORIGINAL_MAX_DEPTH;
                 }
             }
+            for(Direction dir: ALL_DIRECTIONS) {
+                if(level.getBlockEntity(pos.relative(dir)) instanceof CustomSpongeBlockEntity blockEntity) {
+                    blockEntity.MAX_COOLDOWN *= 2;
+                    blockEntity.resetCooldown();
+                    if(level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity myBlockEntity) {
+                        myBlockEntity.MAX_COOLDOWN *= 2;
+                        myBlockEntity.resetCooldown();
+                    }
+                }
+            }
             ArrayList<CustomSpongeBlockEntity> blockEntities = new ArrayList<CustomSpongeBlockEntity>();
             blockEntities.add((CustomSpongeBlockEntity) level.getBlockEntity(pos));
             byte finalUnoX = 0;
@@ -229,8 +236,6 @@ public class CustomSponges extends Block implements EntityBlock {
         }
     }
 
-    public static final int MAX_COOLDOWN = 40;
-
     protected void neighborChanged(final @NotNull BlockState state, final @NotNull Level level, final @NotNull BlockPos pos, final @NotNull Block block, final @Nullable Orientation orientation, final boolean movedByPiston) {
         if (level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity) {
             if (blockEntity.isCooldownFinished()) this.tryAbsorbWater(level, pos);
@@ -271,69 +276,63 @@ public class CustomSponges extends Block implements EntityBlock {
         }
     }
 
-    private boolean removeWaterBreadthFirstSearch(final Level level, final BlockPos startPos) {
+    protected boolean removeWaterBreadthFirstSearch(final Level level, final BlockPos startPos) {
         if (!(level.getBlockEntity(startPos) instanceof CustomSpongeBlockEntity customBlockEntity)) return false;
         return BlockPos.breadthFirstTraversal(startPos, customBlockEntity.MAX_DEPTH, customBlockEntity.MAX_COUNT, (pos, consumer) -> {
             for (Direction direction : ALL_DIRECTIONS) {
                 consumer.accept(pos.relative(direction));
             }
 
-        }, (pos) -> {
-            if (pos.equals(startPos)) {
-                return BlockPos.TraversalNodeStatus.ACCEPT;
-            } else {
-                BlockState state = level.getBlockState(pos);
-                FluidState fluidState = level.getFluidState(pos);
-                Block patt0$temp = state.getBlock();
-                if (patt0$temp instanceof BucketPickup bucketPickup) {
-                    if (!bucketPickup.pickupBlock((LivingEntity) null, level, pos, state).isEmpty()) {
-                        return BlockPos.TraversalNodeStatus.ACCEPT;
-                    }
-                }
-                if (!isATag && !isAClass) {
-                    if (state.is(type)) {
-                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                    } else {
-                        if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) || state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
-                            BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
-                            dropResources(state, level, pos, blockEntity);
-                            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                        } else {
-                            return BlockPos.TraversalNodeStatus.SKIP;
-                        }
-                    }
-                } else if (isATag) {
-                    if (state.is(types)) {
-                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                    } else {
-                        if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) || state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
-                            BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
-                            dropResources(state, level, pos, blockEntity);
-                            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                        } else {
-                            return BlockPos.TraversalNodeStatus.SKIP;
-                        }
-                    }
+        }, (pos) -> removeThing(level, startPos, pos)
+
+        ) > 1;
+    }
+    public BlockPos.TraversalNodeStatus removeThing(Level level, BlockPos startPos, BlockPos pos) {
+        if (!pos.equals(startPos)) {
+            BlockState state = level.getBlockState(pos);
+            FluidState fluidState = level.getFluidState(pos);
+            if (!isATag && !isAClass) {
+                if (state.is(type)) {
+                    level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                 } else {
-                    if (fluidClass.isInstance(fluidState.getType())) {
+                    if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) || state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
+                        BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+                        dropResources(state, level, pos, blockEntity);
                         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                     } else {
-                        if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) ||
-                                state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
-                            BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
-                            dropResources(state, level, pos, blockEntity);
-                            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                        } else {
-                            return BlockPos.TraversalNodeStatus.SKIP;
-                        }
+                        return BlockPos.TraversalNodeStatus.SKIP;
                     }
-
+                }
+            } else if (isATag) {
+                if (state.is(types)) {
+                    level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                } else {
+                    if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) || state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
+                        BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+                        dropResources(state, level, pos, blockEntity);
+                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                    } else {
+                        return BlockPos.TraversalNodeStatus.SKIP;
+                    }
+                }
+            } else {
+                if (fluidClass.isInstance(fluidState.getType())) {
+                    level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                } else {
+                    if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) ||
+                            state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
+                        BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+                        dropResources(state, level, pos, blockEntity);
+                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                    } else {
+                        return BlockPos.TraversalNodeStatus.SKIP;
+                    }
                 }
 
-                return BlockPos.TraversalNodeStatus.ACCEPT;
             }
 
-        }) > 1;
+        }
+        return BlockPos.TraversalNodeStatus.ACCEPT;
     }
 
     @Override
