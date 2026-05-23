@@ -44,7 +44,7 @@ public class SimpleCustomSponges extends CustomSponges{
 
     @Override
     protected boolean removeWaterBreadthFirstSearch(final Level level, final BlockPos startPos) {
-        LOGGER.info("Inizio ad Assorbire fuoco!");
+       //LOGGER.info("Inizio ad Assorbire fuoco!");
         boolean removedAnything = false;
         int count = 0;
         if(!(level.getBlockEntity(startPos) instanceof SimpleCustomSpongeBlockEntity blockEntity)) return false;

@@ -18,6 +18,10 @@ public class SimpleCustomSpongeBlockEntity extends CustomSpongeBlockEntity {
     @Override
     public void setLevel(@NotNull Level level) {
         super.setLevel(level);
+        settaSfera();
+    }
+
+    private void settaSfera() {
         if(!blockPos.isEmpty()) return;
         AABB area = new AABB(this.getBlockPos()).inflate(this.MAX_DEPTH);
         for (BlockPos pos : BlockPos.betweenClosed(area)) {
@@ -30,5 +34,10 @@ public class SimpleCustomSpongeBlockEntity extends CustomSpongeBlockEntity {
                 blockPos.add(new BlockPos(pos.getX(), pos.getY(), pos.getZ()));
             }
         }
+    }
+    @Override
+    public void moltiplicaValori() {
+        super.moltiplicaValori();
+        this.settaSfera();
     }
 }

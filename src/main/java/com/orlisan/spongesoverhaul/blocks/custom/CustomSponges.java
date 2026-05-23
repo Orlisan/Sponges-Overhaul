@@ -224,8 +224,7 @@ public class CustomSponges extends Block implements EntityBlock {
                 for (CustomSpongeBlockEntity blockEntity : blockEntities) {
                     blockEntity.stopCooldown();
                     bigCubePos.add(blockEntity.getBlockPos());
-                    blockEntity.MAX_COUNT *= 8;
-                    blockEntity.MAX_DEPTH *= 4;
+                    blockEntity.moltiplicaValori();
                     blockEntity.isInABigCube = true;
                 }
                 for (CustomSpongeBlockEntity blockEntity : blockEntities) {

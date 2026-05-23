@@ -54,4 +54,9 @@ public class CustomSpongeBlockEntity extends BlockEntity {
     public boolean isCooldownFinished() {
         return FINISHED_COOLDOWN;
     }
+
+    public void moltiplicaValori() {
+        this.MAX_DEPTH *= 4;
+        this.MAX_COUNT *= 8;
+    }
 }
