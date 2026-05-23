@@ -16,6 +16,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
+import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -88,7 +89,7 @@ public class SpongeBlocks {
 
         FIRE_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, dry_fire_id,
                 new SimpleCustomSponges(BlockBehaviour.Properties.of().setId(dryFireKey),
-                        Blocks.FIRE, Items.FIRE_CHARGE, WET_FIRE_SPONGE_BLOCK));
+                        BaseFireBlock.class, Items.FIRE_CHARGE, WET_FIRE_SPONGE_BLOCK));
 
         spongeBlocks.add(FIRE_SPONGE_BLOCK);
 

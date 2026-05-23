@@ -44,23 +44,18 @@ public class SimpleCustomSponges extends CustomSponges{
         int count = 0;
         if(!(level.getBlockEntity(startPos) instanceof CustomSpongeBlockEntity blockEntity)) return false;
         AABB area = new AABB(startPos).inflate(blockEntity.MAX_DEPTH);
-        ArrayList<BlockPos> blockPos = new ArrayList<>();
         for (BlockPos pos : BlockPos.betweenClosed(area)) {
-            if(
-                    Math.ceil(pitagora3d(Math.abs(pos.getX() - startPos.getX()), Math.abs(pos.getY() - startPos.getY()), Math.abs(pos.getZ() - startPos.getZ())))
-                    <= blockEntity.MAX_DEPTH
-                    || Math.floor(pitagora3d(Math.abs(pos.getX() - startPos.getX()), Math.abs(pos.getY() - startPos.getY()), Math.abs(pos.getZ() - startPos.getZ())))
-                    <= blockEntity.MAX_DEPTH
-            ) {
-                blockPos.add(pos);
-                LOGGER.info("La posizione {} fa parte della sfera", pos);
-            }
-        }
-        for (BlockPos pos : blockPos) {
-            if(removeThing(level, startPos, pos) == BlockPos.TraversalNodeStatus.ACCEPT) {
-                removedAnything = true;
-                count++;
-                if(count >= blockEntity.MAX_COUNT) break;
+            double dist = pitagora3d(
+                    Math.abs(pos.getX() - startPos.getX()),
+                    Math.abs(pos.getY() - startPos.getY()),
+                    Math.abs(pos.getZ() - startPos.getZ())
+            );
+            if (Math.ceil(dist) <= blockEntity.MAX_DEPTH || Math.floor(dist) <= blockEntity.MAX_DEPTH) {
+                if (removeThing(level, startPos, pos) == BlockPos.TraversalNodeStatus.ACCEPT) {
+                    removedAnything = true;
+                    count++;
+                    if (count >= blockEntity.MAX_COUNT) break;
+                }
             }
         }
         return removedAnything;
