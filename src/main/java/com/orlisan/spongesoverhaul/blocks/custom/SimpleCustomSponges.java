@@ -6,10 +6,11 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
+
+import static com.orlisan.spongesoverhaul.SpongesOverhaul.LOGGER;
 
 public class SimpleCustomSponges extends CustomSponges{
     public SimpleCustomSponges(Properties properties, Class<?> fluidClass, Item onOutput, Block wetSponge, int... configurazioni) {
@@ -38,6 +39,7 @@ public class SimpleCustomSponges extends CustomSponges{
 
     @Override
     protected boolean removeWaterBreadthFirstSearch(final Level level, final BlockPos startPos) {
+        LOGGER.info("Inizio ad Assorbire fuoco!");
         boolean removedAnything = false;
         int count = 0;
         if(!(level.getBlockEntity(startPos) instanceof CustomSpongeBlockEntity blockEntity)) return false;
@@ -51,6 +53,7 @@ public class SimpleCustomSponges extends CustomSponges{
                     <= blockEntity.MAX_DEPTH
             ) {
                 blockPos.add(pos);
+                LOGGER.info("La posizione {} fa parte della sfera", pos);
             }
         }
         for (BlockPos pos : blockPos) {

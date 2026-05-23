@@ -22,7 +22,9 @@ public class SpongesOverhaul implements ModInitializer {
 		// Proceed with mild caution.
 		SpongeBlocks.register();
 		SpongeBlockEntities.register();
+		SpongesCreativeTab.register();
 
 		LOGGER.info("Hello Fabric world!");
+		LOGGER.info("VIVA FABRIC!!");
 	}
 }

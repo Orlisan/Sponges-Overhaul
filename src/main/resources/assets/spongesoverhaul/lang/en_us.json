@@ -6,5 +6,7 @@
   "item.spongesoverhaul.wet_lava_sponge_block": "Wet Lava Sponge",
 
   "item.spongesoverhaul.fire_sponge_block": "Fire Sponge",
-  "item.spongesoverhaul.wet_fire_sponge_block": "Wet Fire Sponge"
+  "item.spongesoverhaul.wet_fire_sponge_block": "Wet Fire Sponge",
+
+  "itemGroup.spongesoverhaul.sponges_overhaul_tab": "Sponges Overhaul"
 }
