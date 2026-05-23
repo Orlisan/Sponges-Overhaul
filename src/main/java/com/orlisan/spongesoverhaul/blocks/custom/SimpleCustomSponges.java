@@ -1,6 +1,7 @@
 package com.orlisan.spongesoverhaul.blocks.custom;
 
 import com.orlisan.spongesoverhaul.blocks.blockEntities.CustomSpongeBlockEntity;
+import com.orlisan.spongesoverhaul.blocks.blockEntities.SimpleCustomSpongeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -42,20 +43,15 @@ public class SimpleCustomSponges extends CustomSponges{
         LOGGER.info("Inizio ad Assorbire fuoco!");
         boolean removedAnything = false;
         int count = 0;
-        if(!(level.getBlockEntity(startPos) instanceof CustomSpongeBlockEntity blockEntity)) return false;
-        AABB area = new AABB(startPos).inflate(blockEntity.MAX_DEPTH);
-        for (BlockPos pos : BlockPos.betweenClosed(area)) {
-            double dist = pitagora3d(
-                    Math.abs(pos.getX() - startPos.getX()),
-                    Math.abs(pos.getY() - startPos.getY()),
-                    Math.abs(pos.getZ() - startPos.getZ())
-            );
-            if (Math.ceil(dist) <= blockEntity.MAX_DEPTH || Math.floor(dist) <= blockEntity.MAX_DEPTH) {
-                if (removeThing(level, startPos, pos) == BlockPos.TraversalNodeStatus.ACCEPT) {
-                    removedAnything = true;
-                    count++;
-                    if (count >= blockEntity.MAX_COUNT) break;
-                }
+        if(!(level.getBlockEntity(startPos) instanceof SimpleCustomSpongeBlockEntity blockEntity)) return false;
+        if(!blockEntity.blockPos.isEmpty()) {
+            for (BlockPos pos : blockEntity.blockPos) {
+                  if (removeThing(level, startPos, pos) == BlockPos.TraversalNodeStatus.ACCEPT) {
+                        removedAnything = true;
+                        count++;
+                        if (count >= blockEntity.MAX_COUNT) break;
+                  }
+
             }
         }
         return removedAnything;

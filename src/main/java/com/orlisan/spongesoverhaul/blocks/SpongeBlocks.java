@@ -36,7 +36,9 @@ public class SpongeBlocks {
     public static Block WET_FIRE_SPONGE_BLOCK;
     public static Block FIRE_SPONGE_BLOCK;
 
-    public static ArrayList<Block> spongeBlocks = new ArrayList<Block>();
+    public static ArrayList<Block> spongeBlocks = new ArrayList<>();
+    public static ArrayList<Block> simpleSpongeBlocks = new ArrayList<Block>();
+
 
     private SpongeBlocks() {}
 
@@ -91,7 +93,7 @@ public class SpongeBlocks {
                 new SimpleCustomSponges(BlockBehaviour.Properties.of().setId(dryFireKey),
                         BaseFireBlock.class, Items.FIRE_CHARGE, WET_FIRE_SPONGE_BLOCK));
 
-        spongeBlocks.add(FIRE_SPONGE_BLOCK);
+        simpleSpongeBlocks.add(FIRE_SPONGE_BLOCK);
 
 
         Registry.register(BuiltInRegistries.ITEM, wet_water_id,

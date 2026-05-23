@@ -18,6 +18,7 @@ import java.lang.reflect.Array;
 public class SpongeBlockEntities {
     private SpongeBlockEntities(){}
     public static BlockEntityType<@NotNull CustomSpongeBlockEntity> CUSTOM_SPONGE_BLOCK_ENTITY;
+    public static BlockEntityType<@NotNull SimpleCustomSpongeBlockEntity> SIMPLE_CUSTOM_SPONGE_BLOCK_ENTITY;
 
     public static void register() {
         ResourceKey<BlockEntityType<?>> key = ResourceKey.create(
@@ -31,6 +32,20 @@ public class SpongeBlockEntities {
                 FabricBlockEntityTypeBuilder.create(
                         CustomSpongeBlockEntity::new,
                         SpongeBlocks.spongeBlocks.toArray(new Block[0])
+                ).build()  // <-- passa il key qui
+        );
+
+        ResourceKey<BlockEntityType<?>> simple_key = ResourceKey.create(
+                Registries.BLOCK_ENTITY_TYPE,
+                Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "custom_sponge_block_entity")
+        );
+
+        SIMPLE_CUSTOM_SPONGE_BLOCK_ENTITY = Registry.register(
+                BuiltInRegistries.BLOCK_ENTITY_TYPE,
+                Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "simple_custom_sponge_block_entity"),
+                FabricBlockEntityTypeBuilder.create(
+                        SimpleCustomSpongeBlockEntity::new,
+                        SpongeBlocks.simpleSpongeBlocks.toArray(new Block[0])
                 ).build()  // <-- passa il key qui
         );
     }
