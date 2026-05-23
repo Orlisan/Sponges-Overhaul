@@ -1,15 +1,19 @@
 package com.orlisan.spongesoverhaul.blocks.custom;
 
-import com.orlisan.spongesoverhaul.blocks.blockEntities.CustomSpongeBlockEntity;
 import com.orlisan.spongesoverhaul.blocks.blockEntities.SimpleCustomSpongeBlockEntity;
+import com.orlisan.spongesoverhaul.blocks.blockEntities.SpongeBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 
-import java.util.ArrayList;
 
 import static com.orlisan.spongesoverhaul.SpongesOverhaul.LOGGER;
 
@@ -63,5 +67,20 @@ public class SimpleCustomSponges extends CustomSponges{
     }
     public static double pitagora3d(double a, double b, double c) {
         return pitagora(pitagora(a, b), c);
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos worldPosition, @NotNull BlockState blockState) {
+        return new SimpleCustomSpongeBlockEntity(worldPosition, blockState);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
+        if (type == SpongeBlockEntities.SIMPLE_CUSTOM_SPONGE_BLOCK_ENTITY) {
+            return (BlockEntityTicker<T>) (BlockEntityTicker<@NotNull SimpleCustomSpongeBlockEntity>)
+                    (lvl, pos, st, be) -> be.tick(lvl, pos, st);
+        }
+        return null;
     }
 }

@@ -37,7 +37,7 @@ public class SpongeBlockEntities {
 
         ResourceKey<BlockEntityType<?>> simple_key = ResourceKey.create(
                 Registries.BLOCK_ENTITY_TYPE,
-                Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "custom_sponge_block_entity")
+                Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "simple_custom_sponge_block_entity")
         );
 
         SIMPLE_CUSTOM_SPONGE_BLOCK_ENTITY = Registry.register(
