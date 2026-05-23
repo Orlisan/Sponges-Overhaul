@@ -50,7 +50,7 @@ public class SimpleCustomSponges extends CustomSponges{
         if(!(level.getBlockEntity(startPos) instanceof SimpleCustomSpongeBlockEntity blockEntity)) return false;
         if(!blockEntity.blockPos.isEmpty()) {
             for (BlockPos pos : blockEntity.blockPos) {
-                  if (removeThing(level, startPos, pos) == BlockPos.TraversalNodeStatus.ACCEPT) {
+                  if (!pos.equals(startPos) && removeThing(level, startPos, pos) == BlockPos.TraversalNodeStatus.ACCEPT) {
                         removedAnything = true;
                         count++;
                         if (count >= blockEntity.MAX_COUNT) break;

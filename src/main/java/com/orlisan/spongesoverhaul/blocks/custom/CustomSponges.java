@@ -294,10 +294,10 @@ public class CustomSponges extends Block implements EntityBlock {
             if (!isATag && !isAClass) {
                 if (state.is(type)) {
                     level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                    LOGGER.info("Trovato  oggetto {} a {} e sostituito con l'aria", type, pos);
+                    //LOGGER.info("Trovato  oggetto {} a {} e sostituito con l'aria", type, pos);
                 } else {
 
-                    LOGGER.info("Non è stato trovato nessuno oggetto di tipo {} alla posizione {}", type, pos);
+                    //LOGGER.info("Non è stato trovato nessuno oggetto di tipo {} alla posizione {}", type, pos);
                     if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) || state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
                         BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
                         dropResources(state, level, pos, blockEntity);
@@ -309,9 +309,9 @@ public class CustomSponges extends Block implements EntityBlock {
             } else if (isATag) {
                 if (state.is(types)) {
                     level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                    LOGGER.info("Trovato  oggetto {} a {} e sostituito con l'aria", types, pos);
+                  //  LOGGER.info("Trovato  oggetto {} a {} e sostituito con l'aria", types, pos);
                 } else {
-                    LOGGER.info("Non è stato trovato nessuno oggetto di tipo {} alla posizione {}", types, pos);
+                    //LOGGER.info("Non è stato trovato nessuno oggetto di tipo {} alla posizione {}", types, pos);
                     if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) || state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
                         BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
                         dropResources(state, level, pos, blockEntity);
@@ -323,9 +323,9 @@ public class CustomSponges extends Block implements EntityBlock {
             } else {
                 if (fluidClass.isInstance(fluidState.getType()) || fluidClass.isInstance(state.getBlock())) {
                     level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                    LOGGER.info("Trovato  oggetto {} a {} e sostituito con l'aria", fluidClass, pos);
+                    //LOGGER.info("Trovato  oggetto {} a {} e sostituito con l'aria", fluidClass, pos);
                 } else {
-                    LOGGER.info("Non è stato trovato nessuno oggetto di tipo {} alla posizione {}", fluidClass.getSimpleName(), pos);
+                   // LOGGER.info("Non è stato trovato nessuno oggetto di tipo {} alla posizione {}", fluidClass.getSimpleName(), pos);
                     if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) ||
                             state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
                         BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;

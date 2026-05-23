@@ -4,6 +4,7 @@ import com.orlisan.spongesoverhaul.blocks.custom.CustomSponges;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
@@ -14,8 +15,11 @@ public class CustomSpongeBlockEntity extends BlockEntity {
     public int ORIGINAL_MAX_DEPTH = 6;
     public int MAX_COUNT = ORIGINAL_MAX_COUNT;
     public int MAX_DEPTH = ORIGINAL_MAX_DEPTH;
-    public CustomSpongeBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(SpongeBlockEntities.CUSTOM_SPONGE_BLOCK_ENTITY, worldPosition, blockState);
+    public CustomSpongeBlockEntity(BlockEntityType<?> blockEntityType, BlockPos worldPosition, BlockState blockState) {
+        super(blockEntityType, worldPosition, blockState);
+    }
+    public CustomSpongeBlockEntity(BlockPos pos, BlockState state) {
+        super(SpongeBlockEntities.CUSTOM_SPONGE_BLOCK_ENTITY, pos, state);
     }
     public boolean startCooldown = false;
     public boolean FINISHED_COOLDOWN = false;

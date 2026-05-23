@@ -12,7 +12,7 @@ import static com.orlisan.spongesoverhaul.blocks.custom.SimpleCustomSponges.pita
 
 public class SimpleCustomSpongeBlockEntity extends CustomSpongeBlockEntity {
     public SimpleCustomSpongeBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(worldPosition, blockState);
+        super(SpongeBlockEntities.SIMPLE_CUSTOM_SPONGE_BLOCK_ENTITY, worldPosition, blockState);
     }
     public ArrayList<BlockPos> blockPos = new ArrayList<>();
     @Override
