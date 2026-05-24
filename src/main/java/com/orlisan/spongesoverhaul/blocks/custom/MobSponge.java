@@ -12,8 +12,10 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 
 
 public class MobSponge extends SimpleCustomSponges {
@@ -31,13 +33,6 @@ public class MobSponge extends SimpleCustomSponges {
 
     public MobSponge(Properties properties, TagKey<EntityType<?>> types, Item onOutput, Block wetSponge, int... customCountAndDepth) {
         super(properties, types, onOutput, wetSponge, customCountAndDepth);
-    }
-    @Override
-    public void onPlace(final BlockState state, final @NotNull Level level, final @NotNull BlockPos pos, final BlockState oldState, final boolean movedByPiston) {
-        if(level.getBlockEntity(pos) instanceof SimpleCustomSpongeBlockEntity simpleCustomSpongeBlockEntity) {
-            simpleCustomSpongeBlockEntity.isMobSponge = true;
-        }
-        super.onPlace(state, level, pos, oldState, movedByPiston);
     }
     @Override
     public void tryAbsorbWater(Level level, BlockPos pos) {
@@ -88,5 +83,12 @@ public class MobSponge extends SimpleCustomSponges {
 
         }
         return foundedOne;
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos worldPosition, @NotNull BlockState blockState) {
+        SimpleCustomSpongeBlockEntity blockEntity = new SimpleCustomSpongeBlockEntity(worldPosition, blockState);
+        blockEntity.isMobSponge = true;
+        return blockEntity;
     }
 }
