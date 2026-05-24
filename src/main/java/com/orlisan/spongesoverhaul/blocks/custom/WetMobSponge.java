@@ -53,7 +53,7 @@ public class WetMobSponge extends CustomWetSponges implements EntityBlock {
             ArrayList<EntityType<?>> copy = new ArrayList<>(blockEntity.mobsAbsorbed);
             for(EntityType<?> type: copy) {
                 double val = random.nextDouble();
-                if(val < 0.75) {
+                if(val < 0.25) {
                     type.spawn(serverLevel, pos, EntitySpawnReason.TRIGGERED);
                 }
                 blockEntity.mobsAbsorbed.remove(type);

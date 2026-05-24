@@ -1,5 +1,6 @@
 package com.orlisan.spongesoverhaul.blocks.blockEntities;
 
+import com.orlisan.spongesoverhaul.blocks.custom.WetMobSponge;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -27,7 +28,7 @@ public class WetMobCustomSpongeBlockEntity extends BlockEntity {
         if(!mobsAbsorbed.isEmpty() && level instanceof ServerLevel serverLevel) {
 
             double val = RANDOM.nextDouble();
-            if(val < 0.01) {
+            if(val < 0.0001) {
                 int id = RANDOM.nextInt(0, mobsAbsorbed.size());
                 EntityType<?> mob = mobsAbsorbed.get(id);
                 int X = RANDOM.nextInt(3) -1;
@@ -36,9 +37,16 @@ public class WetMobCustomSpongeBlockEntity extends BlockEntity {
                 mob.spawn(serverLevel, spawnPos, EntitySpawnReason.TRIGGERED);
                 mobsAbsorbed.remove(id);
             }
+            if(mobsAbsorbed.isEmpty() && this.getBlockState().getBlock() instanceof WetMobSponge sponge) {
+                level.setBlock(this.getBlockPos(), sponge.getDryVersion().getBlock().defaultBlockState(), 2);
+                if(level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity) {
+                    blockEntity.cooldown = 100;
+                    blockEntity.startCooldown();
+                }
+            }
         }
     }
     public void setMobsAbsorbed(ArrayList<EntityType<?>> newMobs) {
-        mobsAbsorbed = new ArrayList<>(newMobs);
+        mobsAbsorbed = new   ArrayList<>(newMobs);
     }
 }

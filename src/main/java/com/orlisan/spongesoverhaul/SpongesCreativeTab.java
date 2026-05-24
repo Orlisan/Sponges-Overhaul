@@ -22,6 +22,8 @@ public class SpongesCreativeTab {
                             output.accept(SpongeBlocks.WET_LAVA_SPONGE_BLOCK);
                             output.accept(SpongeBlocks.FIRE_SPONGE_BLOCK);
                             output.accept(SpongeBlocks.WET_FIRE_SPONGE_BLOCK);
+                            output.accept(SpongeBlocks.MOB_SPONGE_BLOCK);
+                            output.accept(SpongeBlocks.WET_MOB_SPONGE_BLOCK);
                         })
                         .build()
         );

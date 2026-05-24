@@ -288,6 +288,7 @@ public class CustomSponges extends Block implements EntityBlock {
         ) > 1;
     }
 
+    @SuppressWarnings("unchecked")
     public BlockPos.TraversalNodeStatus removeThing(Level level, BlockPos startPos, BlockPos pos) {
         if (!pos.equals(startPos)) {
             BlockState state = level.getBlockState(pos);
