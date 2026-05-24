@@ -165,7 +165,7 @@ public class SimpleCustomSponges extends CustomSponges {
             }else if(absorbed == 2) {
                 for (BlockPos cubePos : blockEntity.bigCubePos) {
                     BlockState wetState = WET_SPONGE.defaultBlockState().setValue(CustomWetSponges.SOUL, true);
-                    level.setBlock(pos, wetState, 2);
+                    level.setBlock(cubePos, wetState, 2);
                 }
                 level.playSound(null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
 
@@ -192,17 +192,18 @@ public class SimpleCustomSponges extends CustomSponges {
         if (!(level.getBlockEntity(startPos) instanceof SimpleCustomSpongeBlockEntity blockEntity)) return 0;
         if (!blockEntity.blockPos.isEmpty()) {
             for (BlockPos pos : blockEntity.blockPos) {
-                if (!pos.equals(startPos) && removeThing(level, startPos, pos) == BlockPos.TraversalNodeStatus.ACCEPT) {
-                    if(level.getBlockState(pos).getBlock().getClass() == SoulFireBlock.class && BaseFireBlock.class.isAssignableFrom(absorbThingClass))
-                    {
-                        trovatiDiSoul++;
-                    }else if(level.getBlockState(pos).getBlock().getClass() == FireBlock.class && BaseFireBlock.class.isAssignableFrom(absorbThingClass)) {
-                        trovatiDiNormali++;
+                if (!pos.equals(startPos)) {
+                    Block blockAtPos = level.getBlockState(pos).getBlock();
+                    if (removeThing(level, startPos, pos) == BlockPos.TraversalNodeStatus.ACCEPT) {
+                        if (absorbThingClass != null && blockAtPos.getClass() == SoulFireBlock.class && BaseFireBlock.class.isAssignableFrom(absorbThingClass)) {
+                            trovatiDiSoul++;
+                        } else if (absorbThingClass != null && blockAtPos.getClass() == FireBlock.class && BaseFireBlock.class.isAssignableFrom(absorbThingClass)) {
+                            trovatiDiNormali++;
+                        }
+                        count++;
+                        if (count >= blockEntity.MAX_COUNT) break;
                     }
-                    count++;
-                    if (count >= blockEntity.MAX_COUNT) break;
                 }
-
             }
         }
         if(count == 0) return 0;
