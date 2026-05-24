@@ -1,7 +1,6 @@
 {
   "variants": {
-    "": {
-      "model": "spongesoverhaul:block/wet_fire_sponge_block"
-    }
+    "soul=false": { "model": "spongesoverhaul:block/wet_fire_sponge_block" },
+    "soul=true":  { "model": "spongesoverhaul:block/wet_soul_fire_sponge_block" }
   }
 }

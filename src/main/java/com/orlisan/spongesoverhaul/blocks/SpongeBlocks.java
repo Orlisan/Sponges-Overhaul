@@ -5,6 +5,8 @@ import com.orlisan.spongesoverhaul.blocks.custom.CustomSponges;
 import com.orlisan.spongesoverhaul.blocks.custom.CustomWetSponges;
 
 import com.orlisan.spongesoverhaul.blocks.custom.SimpleCustomSponges;
+import com.orlisan.spongesoverhaul.blocks.custom.MobSponge;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -12,6 +14,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -27,96 +30,77 @@ import java.util.ArrayList;
 
 public class SpongeBlocks {
 
-    public static Block WET_WATER_SPONGE_BLOCK;
-    public static Block WATER_SPONGE_BLOCK;
-
-    public static Block WET_LAVA_SPONGE_BLOCK;
-    public static Block LAVA_SPONGE_BLOCK;
-
-    public static Block WET_FIRE_SPONGE_BLOCK;
-    public static Block FIRE_SPONGE_BLOCK;
+    public static Block WET_WATER_SPONGE_BLOCK, WATER_SPONGE_BLOCK;
+    public static Block WET_LAVA_SPONGE_BLOCK, LAVA_SPONGE_BLOCK;
+    public static Block WET_FIRE_SPONGE_BLOCK, FIRE_SPONGE_BLOCK;
+    public static Block WET_MOB_SPONGE_BLOCK, MOB_SPONGE_BLOCK;
 
     public static ArrayList<Block> spongeBlocks = new ArrayList<>();
-    public static ArrayList<Block> simpleSpongeBlocks = new ArrayList<Block>();
-
+    public static ArrayList<Block> simpleSpongeBlocks = new ArrayList<>();
 
     private SpongeBlocks() {}
 
+    private static ResourceKey<Block> blockKey(String name) {
+        return ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, name));
+    }
+    private static ResourceKey<Item> itemKey(String name) {
+        return ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, name));
+    }
+    private static Identifier id(String name) {
+        return Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, name);
+    }
+
     public static void register() {
-        Identifier wet_water_id = Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "wet_sponge_block");
-        Identifier dry_water_id = Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "sponge_block");
-
-        Identifier wet_lava_id = Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "wet_lava_sponge_block");
-        Identifier dry_lava_id = Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "lava_sponge_block");
-
-        Identifier wet_fire_id = Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "wet_fire_sponge_block");
-        Identifier dry_fire_id = Identifier.fromNamespaceAndPath(SpongesOverhaul.MODID, "fire_sponge_block");
-
-        ResourceKey<Block> wetWaterKey = ResourceKey.create(Registries.BLOCK, wet_water_id);
-        ResourceKey<Block> dryWaterKey = ResourceKey.create(Registries.BLOCK, dry_water_id);
-
-        ResourceKey<Block> wetLavaKey = ResourceKey.create(Registries.BLOCK, wet_lava_id);
-        ResourceKey<Block> dryLavaKey = ResourceKey.create(Registries.BLOCK, dry_lava_id);
-
-        ResourceKey<Block> wetFireKey = ResourceKey.create(Registries.BLOCK, wet_fire_id);
-        ResourceKey<Block> dryFireKey = ResourceKey.create(Registries.BLOCK, dry_fire_id);
-
-        ResourceKey<Item> wetWaterItemKey = ResourceKey.create(Registries.ITEM, wet_water_id);
-        ResourceKey<Item> dryWaterItemKey = ResourceKey.create(Registries.ITEM, dry_water_id);
-        ResourceKey<Item> wetLavaItemKey = ResourceKey.create(Registries.ITEM, wet_lava_id);
-        ResourceKey<Item> dryLavaItemKey = ResourceKey.create(Registries.ITEM, dry_lava_id);
-        ResourceKey<Item> wetFireItemKey = ResourceKey.create(Registries.ITEM, wet_fire_id);
-        ResourceKey<Item> dryFireItemKey = ResourceKey.create(Registries.ITEM, dry_fire_id);
-
-        WET_WATER_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, wet_water_id,
-                new CustomWetSponges(BlockBehaviour.Properties.of().setId(wetWaterKey), ParticleTypes.DRIPPING_WATER));
-
-        WATER_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, dry_water_id,
-                new CustomSponges(BlockBehaviour.Properties.of().setId(dryWaterKey),
-                        WaterFluid.class, Items.WATER_BUCKET, WET_WATER_SPONGE_BLOCK));
+        // WATER
+        WET_WATER_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_sponge_block"),
+                new CustomWetSponges(BlockBehaviour.Properties.of().setId(blockKey("wet_sponge_block")), ParticleTypes.DRIPPING_WATER));
+        WATER_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("sponge_block"),
+                new CustomSponges(BlockBehaviour.Properties.of().setId(blockKey("sponge_block")), WaterFluid.class, Items.WATER_BUCKET, WET_WATER_SPONGE_BLOCK));
         spongeBlocks.add(WATER_SPONGE_BLOCK);
 
-
-        WET_LAVA_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, wet_lava_id,
-                new CustomWetSponges(BlockBehaviour.Properties.of().setId(wetLavaKey), ParticleTypes.DRIPPING_LAVA));
-
-        LAVA_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, dry_lava_id,
-                new CustomSponges(BlockBehaviour.Properties.of().setId(dryLavaKey),
-                        LavaFluid.class, Items.LAVA_BUCKET, WET_LAVA_SPONGE_BLOCK));
+        // LAVA
+        WET_LAVA_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_lava_sponge_block"),
+                new CustomWetSponges(BlockBehaviour.Properties.of().setId(blockKey("wet_lava_sponge_block")), ParticleTypes.DRIPPING_LAVA));
+        LAVA_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("lava_sponge_block"),
+                new CustomSponges(BlockBehaviour.Properties.of().setId(blockKey("lava_sponge_block")), LavaFluid.class, Items.LAVA_BUCKET, WET_LAVA_SPONGE_BLOCK));
         spongeBlocks.add(LAVA_SPONGE_BLOCK);
 
-
-        WET_FIRE_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, wet_fire_id,
-                new CustomWetSponges(BlockBehaviour.Properties.of().setId(wetFireKey), ParticleTypes.FLAME));
-
-        FIRE_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, dry_fire_id,
-                new SimpleCustomSponges(BlockBehaviour.Properties.of().setId(dryFireKey),
-                        BaseFireBlock.class, Items.FIRE_CHARGE, WET_FIRE_SPONGE_BLOCK));
-
+        // FIRE
+        WET_FIRE_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_fire_sponge_block"),
+                new CustomWetSponges(BlockBehaviour.Properties.of().setId(blockKey("wet_fire_sponge_block")), ParticleTypes.FLAME));
+        FIRE_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("fire_sponge_block"),
+                new SimpleCustomSponges(BlockBehaviour.Properties.of().setId(blockKey("fire_sponge_block")), BaseFireBlock.class, Items.FIRE_CHARGE, WET_FIRE_SPONGE_BLOCK));
         simpleSpongeBlocks.add(FIRE_SPONGE_BLOCK);
 
+        // MOB
+        WET_MOB_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_mob_sponge_block"),
+                new CustomWetSponges(BlockBehaviour.Properties.of().setId(blockKey("wet_mob_sponge_block")), ParticleTypes.ANGRY_VILLAGER));
+        MOB_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("mob_sponge_block"),
+                new MobSponge(BlockBehaviour.Properties.of().setId(blockKey("mob_sponge_block")), EntityTypeTags.UNDEAD, Items.BONE, WET_MOB_SPONGE_BLOCK));
+        simpleSpongeBlocks.add(MOB_SPONGE_BLOCK);
 
-        Registry.register(BuiltInRegistries.ITEM, wet_water_id,
-                new BlockItem(WET_WATER_SPONGE_BLOCK, new Item.Properties().setId(wetWaterItemKey)));
+        // ITEMS
+        BlockItem dryWaterItem   = registerBlockItem("sponge_block",         WATER_SPONGE_BLOCK,   false);
+        BlockItem dryLavaItem    = registerBlockItem("lava_sponge_block",     LAVA_SPONGE_BLOCK,    true);
+        BlockItem dryFireItem    = registerBlockItem("fire_sponge_block",     FIRE_SPONGE_BLOCK,    true);
+        BlockItem dryMobItem     = registerBlockItem("mob_sponge_block",      MOB_SPONGE_BLOCK,     false);
+        registerBlockItem("wet_sponge_block",      WET_WATER_SPONGE_BLOCK, false);
+        registerBlockItem("wet_lava_sponge_block", WET_LAVA_SPONGE_BLOCK,  true);
+        registerBlockItem("wet_fire_sponge_block", WET_FIRE_SPONGE_BLOCK,  true);
+        BlockItem wetMobItem      = registerBlockItem("wet_mob_sponge_block",  WET_MOB_SPONGE_BLOCK,   false);
 
-        Registry.register(BuiltInRegistries.ITEM, wet_lava_id,
-                new BlockItem(WET_LAVA_SPONGE_BLOCK, new Item.Properties().setId(wetLavaItemKey).fireResistant()));
+        ((CustomWetSponges) WET_WATER_SPONGE_BLOCK).setDryVersion(dryWaterItem);
+        ((CustomWetSponges) WET_LAVA_SPONGE_BLOCK).setDryVersion(dryLavaItem);
+        ((CustomWetSponges) WET_FIRE_SPONGE_BLOCK).setDryVersion(dryFireItem);
+        ((CustomWetSponges) WET_MOB_SPONGE_BLOCK).setDryVersion(dryMobItem);
+    }
 
-        Registry.register(BuiltInRegistries.ITEM, wet_fire_id,
-                new BlockItem(WET_FIRE_SPONGE_BLOCK, new Item.Properties().setId(wetFireItemKey).fireResistant()));
-
-        BlockItem dryBlockItem = new BlockItem(WATER_SPONGE_BLOCK, new Item.Properties().setId(dryWaterItemKey));
-        Registry.register(BuiltInRegistries.ITEM, dry_water_id, dryBlockItem);
-
-        BlockItem dryLavaBlockItem = new BlockItem(LAVA_SPONGE_BLOCK, new Item.Properties().setId(dryLavaItemKey).fireResistant());
-        Registry.register(BuiltInRegistries.ITEM, dry_lava_id, dryLavaBlockItem);
-
-        BlockItem dryFireBlockItem = new BlockItem(FIRE_SPONGE_BLOCK, new Item.Properties().setId(dryFireItemKey).fireResistant());
-        Registry.register(BuiltInRegistries.ITEM, dry_fire_id, dryFireBlockItem);
-
-        ((CustomWetSponges) WET_WATER_SPONGE_BLOCK).setDryVersion(dryBlockItem);
-        ((CustomWetSponges) WET_LAVA_SPONGE_BLOCK).setDryVersion(dryLavaBlockItem);
-        ((CustomWetSponges) WET_FIRE_SPONGE_BLOCK).setDryVersion(dryFireBlockItem);
-
+    private static BlockItem registerBlockItem(String name, Block block, boolean fireResistant) {
+        Item.Properties props = new Item.Properties().setId(itemKey(name));
+        if (fireResistant) props = props.fireResistant();
+        BlockItem item = new BlockItem(block, props);
+        Registry.register(BuiltInRegistries.ITEM, id(name), item);
+        return item;
     }
 }
+

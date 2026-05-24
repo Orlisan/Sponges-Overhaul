@@ -5,10 +5,16 @@ import com.orlisan.spongesoverhaul.blocks.blockEntities.SimpleCustomSpongeBlockE
 import com.orlisan.spongesoverhaul.blocks.blockEntities.SpongeBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FireBlock;
+import net.minecraft.world.level.block.SoulFireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -21,7 +27,7 @@ import java.util.ArrayList;
 
 import static com.orlisan.spongesoverhaul.SpongesOverhaul.LOGGER;
 
-public class SimpleCustomSponges extends CustomSponges{
+public class SimpleCustomSponges extends CustomSponges {
     public SimpleCustomSponges(Properties properties, Class<?> fluidClass, Item onOutput, Block wetSponge, int... configurazioni) {
         super(properties, fluidClass, onOutput, wetSponge, configurazioni);
     }
@@ -30,11 +36,11 @@ public class SimpleCustomSponges extends CustomSponges{
         super(properties, fluidClass, onOutput, wetSponge);
     }
 
-    public SimpleCustomSponges(Properties properties, TagKey<Block> types, Item onOutput, Block wetSponge, int... customCountAndDepth) {
+    public SimpleCustomSponges(Properties properties, TagKey<?> types, Item onOutput, Block wetSponge, int... customCountAndDepth) {
         super(properties, types, onOutput, wetSponge, customCountAndDepth);
     }
 
-    public SimpleCustomSponges(Properties properties, TagKey<Block> types, Item onOutput, Block wetSponge) {
+    public SimpleCustomSponges(Properties properties, TagKey<?> types, Item onOutput, Block wetSponge) {
         super(properties, types, onOutput, wetSponge);
     }
 
@@ -45,6 +51,7 @@ public class SimpleCustomSponges extends CustomSponges{
     public SimpleCustomSponges(Properties properties, Block type, Item onOutput, Block wetSponge) {
         super(properties, type, onOutput, wetSponge);
     }
+
     @Override
     protected void onPlace(final BlockState state, final @NotNull Level level, final @NotNull BlockPos pos, final BlockState oldState, final boolean movedByPiston) {
         if (!oldState.is(state.getBlock()) && !movedByPiston) {
@@ -57,11 +64,11 @@ public class SimpleCustomSponges extends CustomSponges{
                     blockEntity.MAX_DEPTH = blockEntity.ORIGINAL_MAX_DEPTH;
                 }
             }
-            for(Direction dir: ALL_DIRECTIONS) {
-                if(level.getBlockEntity(pos.relative(dir)) instanceof SimpleCustomSpongeBlockEntity blockEntity) {
+            for (Direction dir : ALL_DIRECTIONS) {
+                if (level.getBlockEntity(pos.relative(dir)) instanceof SimpleCustomSpongeBlockEntity blockEntity) {
                     blockEntity.MAX_COOLDOWN *= 2;
                     blockEntity.resetCooldown();
-                    if(level.getBlockEntity(pos) instanceof SimpleCustomSpongeBlockEntity myBlockEntity) {
+                    if (level.getBlockEntity(pos) instanceof SimpleCustomSpongeBlockEntity myBlockEntity) {
                         myBlockEntity.MAX_COOLDOWN *= 2;
                         myBlockEntity.resetCooldown();
                     }
@@ -140,30 +147,76 @@ public class SimpleCustomSponges extends CustomSponges{
             }
         }
     }
-
     @Override
-    protected boolean removeWaterBreadthFirstSearch(final Level level, final BlockPos startPos) {
-       //LOGGER.info("Inizio ad Assorbire fuoco!");
-        boolean removedAnything = false;
+    public void tryAbsorbWater(final Level level, final BlockPos pos) {
+        if (!(level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity)) return;
+
+        int absorbed = 0;
+
+        if (blockEntity.isInABigCube && blockEntity.bigCubePos != null) {
+            for (BlockPos cubePos : blockEntity.bigCubePos) {
+                absorbed = this.removeWaterBreadthFirstSearchFalse(level, cubePos);
+            }
+            if (absorbed == 1) {
+                for (BlockPos cubePos : blockEntity.bigCubePos) {
+                    level.setBlock(cubePos, WET_SPONGE.defaultBlockState(), 2);
+                }
+                level.playSound(null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
+            }else if(absorbed == 2) {
+                for (BlockPos cubePos : blockEntity.bigCubePos) {
+                    BlockState wetState = WET_SPONGE.defaultBlockState().setValue(CustomWetSponges.SOUL, true);
+                    level.setBlock(pos, wetState, 2);
+                }
+                level.playSound(null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+            }
+        } else {
+            if (this.removeWaterBreadthFirstSearchFalse(level, pos) == 1) {
+                level.setBlock(pos, WET_SPONGE.defaultBlockState(), 2);
+                level.playSound((Entity) null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
+            }else if(this.removeWaterBreadthFirstSearchFalse(level, pos) == 2) {
+                BlockState wetState = WET_SPONGE.defaultBlockState().setValue(CustomWetSponges.SOUL, true);
+                level.setBlock(pos, wetState, 2);
+                level.playSound((Entity) null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
+            }
+        }
+    }
+
+    protected int removeWaterBreadthFirstSearchFalse(final Level level, final BlockPos startPos) {
+        //LOGGER.info("Inizio ad Assorbire fuoco!");
+        int removedAnything = 0;
         int count = 0;
-        if(!(level.getBlockEntity(startPos) instanceof SimpleCustomSpongeBlockEntity blockEntity)) return false;
-        if(!blockEntity.blockPos.isEmpty()) {
+        int trovatiDiSoul = 0;
+        int trovatiDiNormali = 0;
+        if (!(level.getBlockEntity(startPos) instanceof SimpleCustomSpongeBlockEntity blockEntity)) return 0;
+        if (!blockEntity.blockPos.isEmpty()) {
             for (BlockPos pos : blockEntity.blockPos) {
-                  if (!pos.equals(startPos) && removeThing(level, startPos, pos) == BlockPos.TraversalNodeStatus.ACCEPT) {
-                        removedAnything = true;
-                        count++;
-                        if (count >= blockEntity.MAX_COUNT) break;
-                  }
+                if (!pos.equals(startPos) && removeThing(level, startPos, pos) == BlockPos.TraversalNodeStatus.ACCEPT) {
+                    if(level.getBlockState(pos).getBlock().getClass() == SoulFireBlock.class && absorbThingClass.isInstance(BaseFireBlock.class))
+                    {
+                        trovatiDiSoul++;
+                    }else if(level.getBlockState(pos).getBlock().getClass() == FireBlock.class && absorbThingClass.isInstance(BaseFireBlock.class)) {
+                        trovatiDiNormali++;
+                    }
+                    count++;
+                    if (count >= blockEntity.MAX_COUNT) break;
+                }
 
             }
         }
+        if(count == 0) return 0;
+        if(trovatiDiNormali < trovatiDiSoul) {
+            removedAnything = 2;
+        }else {
+            removedAnything = 1;
+        }
         return removedAnything;
-
-
     }
+
     public static double pitagora(double a, double b) {
         return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
     }
+
     public static double pitagora3d(double a, double b, double c) {
         return pitagora(pitagora(a, b), c);
     }

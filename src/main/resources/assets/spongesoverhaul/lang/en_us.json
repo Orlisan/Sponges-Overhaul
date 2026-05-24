@@ -8,5 +8,8 @@
   "item.spongesoverhaul.fire_sponge_block": "Fire Sponge",
   "item.spongesoverhaul.wet_fire_sponge_block": "Wet Fire Sponge",
 
+  "item.spongesoverhaul.mob_sponge_block": "Mob Sponge",
+  "item.spongesoverhaul.wet_mob_sponge_block": "Wet Mob Sponge",
+
   "itemGroup.spongesoverhaul.sponges_overhaul_tab": "Sponges Overhaul"
 }

@@ -32,36 +32,36 @@ public class CustomSponges extends Block implements EntityBlock {
     protected static final Direction[] ALL_DIRECTIONS = Direction.values();
 
     protected Block type = null;
-    protected TagKey<Block> types = null;
+    protected TagKey<?> types = null;
     protected final boolean isATag;
     protected boolean isAClass = false;
     protected final Item onOutput;
     protected final Block WET_SPONGE;
-    protected Class<?> fluidClass = null;
+    protected Class<?> absorbThingClass = null;
     protected int CUSTOM_COUNT = 0;
     protected int CUSTOM_DEPTH = 0;
     protected boolean hasCustomConfigurations = false;
 
-    public CustomSponges(Properties properties, Class<?> fluidClass, Item onOutput, Block wetSponge, int... configurazioni) {
+    public CustomSponges(Properties properties, Class<?> absorbThingClass, Item onOutput, Block wetSponge, int... configurazioni) {
         super(properties);
         settaConfigurazioniCustom(configurazioni);
         isATag = false;
         this.onOutput = onOutput;
         this.WET_SPONGE = wetSponge;
-        this.fluidClass = fluidClass;
+        this.absorbThingClass = absorbThingClass;
         this.isAClass = true;
     }
 
-    public CustomSponges(Properties properties, Class<?> fluidClass, Item onOutput, Block wetSponge) {
+    public CustomSponges(Properties properties, Class<?> absorbThingClass, Item onOutput, Block wetSponge) {
         super(properties);
         isATag = false;
         this.onOutput = onOutput;
         this.WET_SPONGE = wetSponge;
-        this.fluidClass = fluidClass;
+        this.absorbThingClass = absorbThingClass;
         this.isAClass = true;
     }
 
-    public CustomSponges(Properties properties, TagKey<Block> types, Item onOutput, Block wetSponge, int... customCountAndDepth) {
+    public CustomSponges(Properties properties, TagKey<?> types, Item onOutput, Block wetSponge, int... customCountAndDepth) {
         super(properties);
         settaConfigurazioniCustom(customCountAndDepth);
         isATag = true;
@@ -70,7 +70,7 @@ public class CustomSponges extends Block implements EntityBlock {
         this.WET_SPONGE = wetSponge;
     }
 
-    public CustomSponges(Properties properties, TagKey<Block> types, Item onOutput, Block wetSponge) {
+    public CustomSponges(Properties properties, TagKey<?> types, Item onOutput, Block wetSponge) {
         super(properties);
         isATag = true;
         this.types = types;
@@ -116,11 +116,11 @@ public class CustomSponges extends Block implements EntityBlock {
         this.type = type;
     }
 
-    public TagKey<Block> getTypes() {
+    public TagKey<?> getTypes() {
         return types;
     }
 
-    public void setTypes(TagKey<Block> types) {
+    public void setTypes(TagKey<?> types) {
         this.types = types;
     }
 
@@ -151,11 +151,11 @@ public class CustomSponges extends Block implements EntityBlock {
                     blockEntity.MAX_DEPTH = blockEntity.ORIGINAL_MAX_DEPTH;
                 }
             }
-            for(Direction dir: ALL_DIRECTIONS) {
-                if(level.getBlockEntity(pos.relative(dir)) instanceof CustomSpongeBlockEntity blockEntity) {
+            for (Direction dir : ALL_DIRECTIONS) {
+                if (level.getBlockEntity(pos.relative(dir)) instanceof CustomSpongeBlockEntity blockEntity) {
                     blockEntity.MAX_COOLDOWN *= 2;
                     blockEntity.resetCooldown();
-                    if(level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity myBlockEntity) {
+                    if (level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity myBlockEntity) {
                         myBlockEntity.MAX_COOLDOWN *= 2;
                         myBlockEntity.resetCooldown();
                     }
@@ -275,17 +275,19 @@ public class CustomSponges extends Block implements EntityBlock {
         }
     }
 
+
     protected boolean removeWaterBreadthFirstSearch(final Level level, final BlockPos startPos) {
         if (!(level.getBlockEntity(startPos) instanceof CustomSpongeBlockEntity customBlockEntity)) return false;
         return BlockPos.breadthFirstTraversal(startPos, customBlockEntity.MAX_DEPTH, customBlockEntity.MAX_COUNT, (pos, consumer) -> {
-            for (Direction direction : ALL_DIRECTIONS) {
-                consumer.accept(pos.relative(direction));
-            }
+                    for (Direction direction : ALL_DIRECTIONS) {
+                        consumer.accept(pos.relative(direction));
+                    }
 
-        }, (pos) -> removeThing(level, startPos, pos)
+                }, (pos) -> removeThing(level, startPos, pos)
 
         ) > 1;
     }
+
     public BlockPos.TraversalNodeStatus removeThing(Level level, BlockPos startPos, BlockPos pos) {
         if (!pos.equals(startPos)) {
             BlockState state = level.getBlockState(pos);
@@ -306,9 +308,9 @@ public class CustomSponges extends Block implements EntityBlock {
                     }
                 }
             } else if (isATag) {
-                if (state.is(types)) {
+                if (state.is((TagKey<Block>) types)) {
                     level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                  //  LOGGER.info("Trovato  oggetto {} a {} e sostituito con l'aria", types, pos);
+                    //  LOGGER.info("Trovato oggetto {} a {} e sostituito con l'aria", types, pos);
                 } else {
                     //LOGGER.info("Non è stato trovato nessuno oggetto di tipo {} alla posizione {}", types, pos);
                     if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) || state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
@@ -320,11 +322,11 @@ public class CustomSponges extends Block implements EntityBlock {
                     }
                 }
             } else {
-                if (fluidClass.isInstance(fluidState.getType()) || fluidClass.isInstance(state.getBlock())) {
+                if (absorbThingClass.isInstance(fluidState.getType()) || absorbThingClass.isInstance(state.getBlock())) {
                     level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                    //LOGGER.info("Trovato  oggetto {} a {} e sostituito con l'aria", fluidClass, pos);
+                    //LOGGER.info("Trovato oggetto {} a {} e sostituito con l'aria", fluidClass, pos);
                 } else {
-                   // LOGGER.info("Non è stato trovato nessuno oggetto di tipo {} alla posizione {}", fluidClass.getSimpleName(), pos);
+                    // LOGGER.info("Non è stato trovato nessuno oggetto di tipo {} alla posizione {}", fluidClass.getSimpleName(), pos);
                     if (state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) ||
                             state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS)) {
                         BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;

@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "spongesoverhaul:block/mob_sponge_block"
+  }
+}

@@ -16,19 +16,30 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.WetSpongeBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class CustomWetSponges extends Block {
+    public static BooleanProperty SOUL = BooleanProperty.create("soul");
     private BlockItem dryVersion = null;
     private final SimpleParticleType particleTypes;
     public CustomWetSponges(Properties properties, BlockItem dryVersion, SimpleParticleType particleTypes) {
         super(properties);
         this.dryVersion = dryVersion;
         this.particleTypes = particleTypes;
+        this.registerDefaultState(this.stateDefinition.any().setValue(SOUL, false));
     }
+
 
     public CustomWetSponges(Properties properties, SimpleParticleType particleTypes) {
         super(properties);
         this.particleTypes = particleTypes;
+        this.registerDefaultState(this.stateDefinition.any().setValue(SOUL, false));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(SOUL);
     }
 
     public BlockItem getDryVersion() {
