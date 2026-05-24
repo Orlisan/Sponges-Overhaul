@@ -3,12 +3,15 @@ package com.orlisan.spongesoverhaul.blocks.custom;
 import com.orlisan.spongesoverhaul.blocks.blockEntities.CustomSpongeBlockEntity;
 import com.orlisan.spongesoverhaul.blocks.blockEntities.SimpleCustomSpongeBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -16,6 +19,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 
 public class MobSponge extends SimpleCustomSponges {
@@ -90,5 +96,20 @@ public class MobSponge extends SimpleCustomSponges {
         SimpleCustomSpongeBlockEntity blockEntity = new SimpleCustomSpongeBlockEntity(worldPosition, blockState);
         blockEntity.isMobSponge = true;
         return blockEntity;
+    }
+    private static Random random = new Random();
+    @Override
+    public @NotNull BlockState playerWillDestroy(Level level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
+        if(level.getBlockEntity(pos) instanceof SimpleCustomSpongeBlockEntity blockEntity && blockEntity.isMobSponge && !blockEntity.mobsAbsorbed.isEmpty()) {
+            ArrayList<EntityType<?>> copy = new ArrayList<>(blockEntity.mobsAbsorbed);
+            for(EntityType<?> type: copy) {
+                double val = random.nextDouble();
+                if(val < 0.75) {
+                    type.spawn((ServerLevel) level, pos, EntitySpawnReason.TRIGGERED);
+                }
+                blockEntity.mobsAbsorbed.remove(type);
+            }
+        }
+        return super.playerWillDestroy(level, pos, state, player);
     }
 }

@@ -155,7 +155,8 @@ public class SimpleCustomSponges extends CustomSponges {
 
         if (blockEntity.isInABigCube && blockEntity.bigCubePos != null) {
             for (BlockPos cubePos : blockEntity.bigCubePos) {
-                absorbed = this.removeWaterBreadthFirstSearchFalse(level, cubePos);
+                int r = this.removeWaterBreadthFirstSearchFalse(level, cubePos);
+                if (r > absorbed) absorbed = r;
             }
             if (absorbed == 1) {
                 for (BlockPos cubePos : blockEntity.bigCubePos) {
