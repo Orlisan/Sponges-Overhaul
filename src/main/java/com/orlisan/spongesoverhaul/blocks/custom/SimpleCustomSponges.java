@@ -171,10 +171,11 @@ public class SimpleCustomSponges extends CustomSponges {
 
             }
         } else {
-            if (this.removeWaterBreadthFirstSearchFalse(level, pos) == 1) {
+            int result = this.removeWaterBreadthFirstSearchFalse(level, pos);
+            if (result == 1) {
                 level.setBlock(pos, WET_SPONGE.defaultBlockState(), 2);
                 level.playSound((Entity) null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
-            }else if(this.removeWaterBreadthFirstSearchFalse(level, pos) == 2) {
+            }else if(result == 2) {
                 BlockState wetState = WET_SPONGE.defaultBlockState().setValue(CustomWetSponges.SOUL, true);
                 level.setBlock(pos, wetState, 2);
                 level.playSound((Entity) null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -192,10 +193,10 @@ public class SimpleCustomSponges extends CustomSponges {
         if (!blockEntity.blockPos.isEmpty()) {
             for (BlockPos pos : blockEntity.blockPos) {
                 if (!pos.equals(startPos) && removeThing(level, startPos, pos) == BlockPos.TraversalNodeStatus.ACCEPT) {
-                    if(level.getBlockState(pos).getBlock().getClass() == SoulFireBlock.class && absorbThingClass.isInstance(BaseFireBlock.class))
+                    if(level.getBlockState(pos).getBlock().getClass() == SoulFireBlock.class && BaseFireBlock.class.isAssignableFrom(absorbThingClass))
                     {
                         trovatiDiSoul++;
-                    }else if(level.getBlockState(pos).getBlock().getClass() == FireBlock.class && absorbThingClass.isInstance(BaseFireBlock.class)) {
+                    }else if(level.getBlockState(pos).getBlock().getClass() == FireBlock.class && BaseFireBlock.class.isAssignableFrom(absorbThingClass)) {
                         trovatiDiNormali++;
                     }
                     count++;
