@@ -1,11 +1,7 @@
 package com.orlisan.spongesoverhaul.blocks;
 
 import com.orlisan.spongesoverhaul.SpongesOverhaul;
-import com.orlisan.spongesoverhaul.blocks.custom.CustomSponges;
-import com.orlisan.spongesoverhaul.blocks.custom.CustomWetSponges;
-
-import com.orlisan.spongesoverhaul.blocks.custom.SimpleCustomSponges;
-import com.orlisan.spongesoverhaul.blocks.custom.MobSponge;
+import com.orlisan.spongesoverhaul.blocks.custom.*;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
@@ -74,7 +70,7 @@ public class SpongeBlocks {
 
         // MOB
         WET_MOB_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_mob_sponge_block"),
-                new CustomWetSponges(BlockBehaviour.Properties.of().setId(blockKey("wet_mob_sponge_block")), ParticleTypes.ANGRY_VILLAGER));
+                new WetMobSponge(BlockBehaviour.Properties.of().setId(blockKey("wet_mob_sponge_block")), ParticleTypes.ANGRY_VILLAGER));
         MOB_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("mob_sponge_block"),
                 new MobSponge(BlockBehaviour.Properties.of().setId(blockKey("mob_sponge_block")), EntityTypeTags.UNDEAD, Items.BONE, WET_MOB_SPONGE_BLOCK));
         simpleSpongeBlocks.add(MOB_SPONGE_BLOCK);

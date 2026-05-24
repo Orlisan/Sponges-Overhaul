@@ -19,7 +19,6 @@ public class SimpleCustomSpongeBlockEntity extends CustomSpongeBlockEntity {
         super(SpongeBlockEntities.SIMPLE_CUSTOM_SPONGE_BLOCK_ENTITY, worldPosition, blockState);
     }
     private final Random RANDOM = new Random();
-    public boolean isMobSponge;
     public ArrayList<EntityType<?>> mobsAbsorbed = new ArrayList<>();
     public AABB area = new AABB(this.getBlockPos()).inflate(this.MAX_DEPTH);
     public ArrayList<BlockPos> blockPos = new ArrayList<>();
@@ -27,23 +26,6 @@ public class SimpleCustomSpongeBlockEntity extends CustomSpongeBlockEntity {
     public void setLevel(@NotNull Level level) {
         super.setLevel(level);
         settaSfera();
-    }
-    @Override
-    public void tick(Level level, BlockPos pos, BlockState state) {
-        super.tick(level, pos, state);
-        if(isMobSponge && !mobsAbsorbed.isEmpty() && level instanceof ServerLevel serverLevel) {
-
-            double val = RANDOM.nextDouble();
-            if(val < 0.01) {
-                int id = RANDOM.nextInt(0, mobsAbsorbed.size());
-                EntityType<?> mob = mobsAbsorbed.get(id);
-                int X = RANDOM.nextInt(3) -1;
-                int Z = RANDOM.nextInt(3) -1;
-                BlockPos spawnPos = new BlockPos(this.getBlockPos().getX() + X, this.getBlockPos().getY() +1, this.getBlockPos().getZ()+Z);
-                mob.spawn(serverLevel, spawnPos, EntitySpawnReason.TRIGGERED);
-                mobsAbsorbed.remove(id);
-            }
-        }
     }
 
     private void settaSfera() {
@@ -62,5 +44,8 @@ public class SimpleCustomSpongeBlockEntity extends CustomSpongeBlockEntity {
     public void moltiplicaValori() {
         super.moltiplicaValori();
         this.settaSfera();
+    }
+    public ArrayList<EntityType<?>> getMobsAbsorbed() {
+        return mobsAbsorbed;
     }
 }

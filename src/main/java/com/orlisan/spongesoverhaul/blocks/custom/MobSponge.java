@@ -2,6 +2,7 @@ package com.orlisan.spongesoverhaul.blocks.custom;
 
 import com.orlisan.spongesoverhaul.blocks.blockEntities.CustomSpongeBlockEntity;
 import com.orlisan.spongesoverhaul.blocks.blockEntities.SimpleCustomSpongeBlockEntity;
+import com.orlisan.spongesoverhaul.blocks.blockEntities.WetMobCustomSpongeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -42,7 +43,7 @@ public class MobSponge extends SimpleCustomSponges {
     }
     @Override
     public void tryAbsorbWater(Level level, BlockPos pos) {
-        if (!(level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity)) return;
+        if (!(level.getBlockEntity(pos) instanceof SimpleCustomSpongeBlockEntity blockEntity)) return;
 
         boolean absorbed = false;
 
@@ -52,13 +53,24 @@ public class MobSponge extends SimpleCustomSponges {
             }
             if (absorbed) {
                 for (BlockPos cubePos : blockEntity.bigCubePos) {
+                    ArrayList<EntityType<?>> mobsAbsorbed = null;
+                    if(level.getBlockEntity(cubePos) instanceof SimpleCustomSpongeBlockEntity simpleBlockEntity) {
+                        mobsAbsorbed = new ArrayList<>(simpleBlockEntity.getMobsAbsorbed());
+                    }
                     level.setBlock(cubePos, WET_SPONGE.defaultBlockState(), 2);
+                    if(mobsAbsorbed != null && level.getBlockEntity(cubePos) instanceof WetMobCustomSpongeBlockEntity newBlockEntity) {
+                        newBlockEntity.setMobsAbsorbed(mobsAbsorbed);
+                    }
                 }
                 level.playSound((Entity) null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
         } else {
             if (this.removeWaterBreadthFirstSearch(level, pos)) {
+                ArrayList<EntityType<?>> mobsAbsorbed = new ArrayList<>(blockEntity.getMobsAbsorbed());
                 level.setBlock(pos, WET_SPONGE.defaultBlockState(), 2);
+                if(level.getBlockEntity(pos) instanceof WetMobCustomSpongeBlockEntity newBlockEntity) {
+                    newBlockEntity.setMobsAbsorbed(mobsAbsorbed);
+                }
                 level.playSound((Entity) null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
         }
@@ -93,23 +105,6 @@ public class MobSponge extends SimpleCustomSponges {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos worldPosition, @NotNull BlockState blockState) {
-        SimpleCustomSpongeBlockEntity blockEntity = new SimpleCustomSpongeBlockEntity(worldPosition, blockState);
-        blockEntity.isMobSponge = true;
-        return blockEntity;
-    }
-    private static Random random = new Random();
-    @Override
-    public @NotNull BlockState playerWillDestroy(Level level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
-        if(level.getBlockEntity(pos) instanceof SimpleCustomSpongeBlockEntity blockEntity && blockEntity.isMobSponge && !blockEntity.mobsAbsorbed.isEmpty()) {
-            ArrayList<EntityType<?>> copy = new ArrayList<>(blockEntity.mobsAbsorbed);
-            for(EntityType<?> type: copy) {
-                double val = random.nextDouble();
-                if(val < 0.75) {
-                    type.spawn((ServerLevel) level, pos, EntitySpawnReason.TRIGGERED);
-                }
-                blockEntity.mobsAbsorbed.remove(type);
-            }
-        }
-        return super.playerWillDestroy(level, pos, state, player);
+        return new SimpleCustomSpongeBlockEntity(worldPosition, blockState);
     }
 }
