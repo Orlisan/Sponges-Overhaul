@@ -26,10 +26,8 @@ public class SimpleCustomSpongeBlockEntity extends CustomSpongeBlockEntity {
         AABB area = new AABB(this.getBlockPos()).inflate(this.MAX_DEPTH);
         for (BlockPos pos : BlockPos.betweenClosed(area)) {
             if (
-                    Math.ceil(pitagora3d(Math.abs(pos.getX() - this.getBlockPos().getX()), Math.abs(pos.getY() - this.getBlockPos().getY()), Math.abs(pos.getZ() - this.getBlockPos().getZ())))
-                            <= this.MAX_DEPTH
-                            || Math.floor(pitagora3d(Math.abs(pos.getX() - this.getBlockPos().getX()), Math.abs(pos.getY() - this.getBlockPos().getY()), Math.abs(pos.getZ() - this.getBlockPos().getZ())))
-                            <= this.MAX_DEPTH
+                pitagora3d(Math.abs(pos.getX() - this.getBlockPos().getX()), Math.abs(pos.getY() - this.getBlockPos().getY()), Math.abs(pos.getZ() - this.getBlockPos().getZ()))
+                <= this.MAX_DEPTH
             ) {
                 blockPos.add(new BlockPos(pos.getX(), pos.getY(), pos.getZ()));
             }

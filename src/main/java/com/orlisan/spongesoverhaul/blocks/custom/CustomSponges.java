@@ -29,18 +29,18 @@ import static com.orlisan.spongesoverhaul.SpongesOverhaul.LOGGER;
 
 public class CustomSponges extends Block implements EntityBlock {
 
-    private static final Direction[] ALL_DIRECTIONS = Direction.values();
+    protected static final Direction[] ALL_DIRECTIONS = Direction.values();
 
-    private Block type = null;
-    private TagKey<Block> types = null;
-    private final boolean isATag;
-    private boolean isAClass = false;
-    private final Item onOutput;
-    private final Block WET_SPONGE;
-    private Class<?> fluidClass = null;
-    private int CUSTOM_COUNT = 0;
-    private int CUSTOM_DEPTH = 0;
-    private boolean hasCustomConfigurations = false;
+    protected Block type = null;
+    protected TagKey<Block> types = null;
+    protected final boolean isATag;
+    protected boolean isAClass = false;
+    protected final Item onOutput;
+    protected final Block WET_SPONGE;
+    protected Class<?> fluidClass = null;
+    protected int CUSTOM_COUNT = 0;
+    protected int CUSTOM_DEPTH = 0;
+    protected boolean hasCustomConfigurations = false;
 
     public CustomSponges(Properties properties, Class<?> fluidClass, Item onOutput, Block wetSponge, int... configurazioni) {
         super(properties);
@@ -161,7 +161,7 @@ public class CustomSponges extends Block implements EntityBlock {
                     }
                 }
             }
-            ArrayList<CustomSpongeBlockEntity> blockEntities = new ArrayList<CustomSpongeBlockEntity>();
+            ArrayList<CustomSpongeBlockEntity> blockEntities = new ArrayList<>();
             blockEntities.add((CustomSpongeBlockEntity) level.getBlockEntity(pos));
             byte finalUnoX = 0;
             byte finalUnoY = 0;
