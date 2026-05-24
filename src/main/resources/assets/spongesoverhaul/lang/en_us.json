@@ -11,5 +11,11 @@
   "item.spongesoverhaul.mob_sponge_block": "Mob Sponge",
   "item.spongesoverhaul.wet_mob_sponge_block": "Wet Mob Sponge",
 
+  "item.spongesoverhaul.snow_sponge_block": "Snow Sponge",
+  "item.spongesoverhaul.wet_snow_sponge_block": "Wet Snoq Sponge",
+
+  "item.spongesoverhaul.diamond_sponge_block": "Diamond Sponge",
+  "item.spongesoverhaul.wet_diamond_sponge_block": "Wet Diamond Sponge",
+
   "itemGroup.spongesoverhaul.sponges_overhaul_tab": "Sponges Overhaul"
 }

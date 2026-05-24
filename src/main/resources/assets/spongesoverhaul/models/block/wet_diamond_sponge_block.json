@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "spongesoverhaul:block/wet_diamond_sponge_block"
+  }
+}
