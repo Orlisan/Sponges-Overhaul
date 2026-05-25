@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 
 public class CustomSpongeBlockEntity extends BlockEntity {
-    public int ORIGINAL_MAX_COUNT = 65;
+    public int ORIGINAL_MAX_COUNT = 257;
     public int ORIGINAL_MAX_DEPTH = 6;
     public int MAX_COUNT = ORIGINAL_MAX_COUNT;
     public int MAX_DEPTH = ORIGINAL_MAX_DEPTH;

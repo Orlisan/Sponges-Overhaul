@@ -91,7 +91,7 @@ public class SpongeBlocks {
                 new CustomWetSponges(wetSpongeProperties.setId(blockKey("wet_diamond_sponge_block")), ParticleTypes.DRIPPING_WATER));
         DIAMOND_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("diamond_sponge_block"),
                 new CustomSponges(spongeProperties.setId(blockKey("diamond_sponge_block")), WaterFluid.class, Items.WATER_BUCKET, WET_DIAMOND_SPONGE_BLOCK, 16, 216));
-        simpleSpongeBlocks.add(DIAMOND_SPONGE_BLOCK);
+        spongeBlocks.add(DIAMOND_SPONGE_BLOCK);
 
         // ITEMS
         BlockItem dryWaterItem   = registerBlockItem("sponge_block",         WATER_SPONGE_BLOCK,   false);
