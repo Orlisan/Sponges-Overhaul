@@ -33,6 +33,7 @@ public class SpongeBlocks {
     public static Block WET_MOB_SPONGE_BLOCK, MOB_SPONGE_BLOCK;
     public static Block WET_SNOW_SPONGE_BLOCK, SNOW_SPONGE_BLOCK;
     public static Block WET_DIAMOND_SPONGE_BLOCK, DIAMOND_SPONGE_BLOCK;
+    public static Block WET_LINGERING_POTION_SPONGE_BLOCK, LINGERING_POTION_SPONGE_BLOCK;
 
     public static ArrayList<Block> spongeBlocks = new ArrayList<>();
     public static ArrayList<Block> simpleSpongeBlocks = new ArrayList<>();
@@ -93,6 +94,13 @@ public class SpongeBlocks {
                 new CustomSponges(spongeProperties.setId(blockKey("diamond_sponge_block")), WaterFluid.class, Items.WATER_BUCKET, WET_DIAMOND_SPONGE_BLOCK, 16, 216));
         spongeBlocks.add(DIAMOND_SPONGE_BLOCK);
 
+        //LINGERING POTION
+        WET_LINGERING_POTION_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_lingering_potion_sponge_block"),
+                new LingeringPotionWetSponge(wetSpongeProperties.setId(blockKey("wet_lingering_potion_sponge_block"))));
+        LINGERING_POTION_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("lingering_potion_sponge_block"),
+                new CustomSponges(spongeProperties.setId(blockKey("lingering_potion_sponge_block")), Items.WATER_BUCKET, WET_DIAMOND_SPONGE_BLOCK));
+        simpleSpongeBlocks.add(LINGERING_POTION_SPONGE_BLOCK);
+
         // ITEMS
         BlockItem dryWaterItem   = registerBlockItem("sponge_block",         WATER_SPONGE_BLOCK,   false);
         BlockItem dryLavaItem    = registerBlockItem("lava_sponge_block",     LAVA_SPONGE_BLOCK,    true);
@@ -100,12 +108,14 @@ public class SpongeBlocks {
         BlockItem dryMobItem     = registerBlockItem("mob_sponge_block",      MOB_SPONGE_BLOCK,     false);
         BlockItem drySnowItem     = registerBlockItem("snow_sponge_block",      SNOW_SPONGE_BLOCK,     false);
         BlockItem dryDiamondItem   = registerBlockItem("diamond_sponge_block",  DIAMOND_SPONGE_BLOCK,   false);
+        BlockItem dryLingeringPotionItem   = registerBlockItem("lingering_potion_sponge_block",  LINGERING_POTION_SPONGE_BLOCK,   false);
         registerBlockItem("wet_sponge_block",      WET_WATER_SPONGE_BLOCK, false);
         registerBlockItem("wet_lava_sponge_block", WET_LAVA_SPONGE_BLOCK,  true);
         registerBlockItem("wet_fire_sponge_block", WET_FIRE_SPONGE_BLOCK,  true);
         registerBlockItem("wet_snow_sponge_block", WET_SNOW_SPONGE_BLOCK,  false);
         registerBlockItem("wet_diamond_sponge_block", WET_DIAMOND_SPONGE_BLOCK,  false);
-        BlockItem wetMobItem      = registerBlockItem("wet_mob_sponge_block",  WET_MOB_SPONGE_BLOCK,   false);
+        registerBlockItem("wet_mob_sponge_block",  WET_MOB_SPONGE_BLOCK,   false);
+        registerBlockItem("wet_lingering_potion_sponge_block",  WET_LINGERING_POTION_SPONGE_BLOCK,   false);
 
         ((CustomWetSponges) WET_WATER_SPONGE_BLOCK).setDryVersion(dryWaterItem);
         ((CustomWetSponges) WET_LAVA_SPONGE_BLOCK).setDryVersion(dryLavaItem);
@@ -113,6 +123,7 @@ public class SpongeBlocks {
         ((CustomWetSponges) WET_MOB_SPONGE_BLOCK).setDryVersion(dryMobItem);
         ((CustomWetSponges) WET_SNOW_SPONGE_BLOCK).setDryVersion(drySnowItem);
         ((CustomWetSponges) WET_DIAMOND_SPONGE_BLOCK).setDryVersion(dryDiamondItem);
+        ((CustomWetSponges) WET_LINGERING_POTION_SPONGE_BLOCK).setDryVersion(dryLingeringPotionItem);
     }
 
     private static BlockItem registerBlockItem(String name, Block block, boolean fireResistant) {

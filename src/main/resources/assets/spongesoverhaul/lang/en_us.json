@@ -12,10 +12,13 @@
   "item.spongesoverhaul.wet_mob_sponge_block": "Wet Mob Sponge",
 
   "item.spongesoverhaul.snow_sponge_block": "Snow Sponge",
-  "item.spongesoverhaul.wet_snow_sponge_block": "Wet Snoq Sponge",
+  "item.spongesoverhaul.wet_snow_sponge_block": "Wet Snow Sponge",
 
   "item.spongesoverhaul.diamond_sponge_block": "Diamond Sponge",
   "item.spongesoverhaul.wet_diamond_sponge_block": "Wet Diamond Sponge",
+
+  "item.spongesoverhaul.lingering_potion_sponge_block": "Potion Sponge",
+  "item.spongesoverhaul.wet_lingering_potion_sponge_block": "Wet Potion Sponge",
 
   "itemGroup.spongesoverhaul.sponges_overhaul_tab": "Sponges Overhaul"
 }

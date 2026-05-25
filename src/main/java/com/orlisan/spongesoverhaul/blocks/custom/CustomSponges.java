@@ -95,6 +95,13 @@ public class CustomSponges extends Block implements EntityBlock {
         this.WET_SPONGE = wetSponge;
     }
 
+    public CustomSponges(Properties properties, Item onOutPut, Block wetSponge) {
+        super(properties);
+        isATag = false;
+        this.onOutput = onOutPut;
+        this.WET_SPONGE = wetSponge;
+    }
+
     public void settaConfigurazioniCustom(int... configurazioni) {
         if (configurazioni.length >= 3) {
             LOGGER.info("[Sponges Overhaul] Le Configurazioni Specificate non rientrano nei limiti logici, verranno presi in considerazione solo i primi 2");

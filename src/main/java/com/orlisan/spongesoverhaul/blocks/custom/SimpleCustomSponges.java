@@ -51,6 +51,9 @@ public class SimpleCustomSponges extends CustomSponges {
     public SimpleCustomSponges(Properties properties, Block type, Item onOutput, Block wetSponge) {
         super(properties, type, onOutput, wetSponge);
     }
+    public SimpleCustomSponges(Properties properties, Item onOutput, Block wetSponge) {
+        super(properties, onOutput, wetSponge);
+    }
 
     @Override
     protected void onPlace(final BlockState state, final @NotNull Level level, final @NotNull BlockPos pos, final BlockState oldState, final boolean movedByPiston) {

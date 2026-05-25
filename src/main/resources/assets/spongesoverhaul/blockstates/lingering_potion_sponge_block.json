@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "spongesoverhaul:block/lingering_potion_sponge_block"
+    }
+  }
+}
