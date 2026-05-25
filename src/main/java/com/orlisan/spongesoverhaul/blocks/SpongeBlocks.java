@@ -16,6 +16,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -98,7 +99,7 @@ public class SpongeBlocks {
         WET_LINGERING_POTION_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_lingering_potion_sponge_block"),
                 new LingeringPotionWetSponge(wetSpongeProperties.setId(blockKey("wet_lingering_potion_sponge_block"))));
         LINGERING_POTION_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("lingering_potion_sponge_block"),
-                new CustomSponges(spongeProperties.setId(blockKey("lingering_potion_sponge_block")), Items.WATER_BUCKET, WET_DIAMOND_SPONGE_BLOCK));
+                new LingeringPotionSponge(spongeProperties.setId(blockKey("lingering_potion_sponge_block")), Items.LINGERING_POTION, WET_LINGERING_POTION_SPONGE_BLOCK));
         simpleSpongeBlocks.add(LINGERING_POTION_SPONGE_BLOCK);
 
         // ITEMS
