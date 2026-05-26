@@ -5,7 +5,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,9 +24,9 @@ public class LingeringPotionWetSponge extends CustomWetSponges{
             BlockPos relativePos = pos.relative(direction);
             BlockState blockState = level.getBlockState(relativePos);
             if (!state.canOcclude() || !blockState.isFaceSturdy(level, relativePos, direction.getOpposite())) {
-                double xx = (double)pos.getX();
-                double yy = (double)pos.getY();
-                double zz = (double)pos.getZ();
+                double xx = pos.getX();
+                double yy = pos.getY();
+                double zz = pos.getZ();
                 if (direction == Direction.DOWN) {
                     yy -= 0.05;
                     xx += random.nextDouble();
@@ -50,7 +49,7 @@ public class LingeringPotionWetSponge extends CustomWetSponges{
                         }
                     }
                 }
-                level.addParticle(outputRandomPotionColor(), xx, yy, zz, (double)0.0F, (double)0.0F, (double)0.0F);
+                level.addParticle(outputRandomPotionColor(), xx, yy, zz, 0.0F, 0.0F, 0.0F);
             }
         }
     }
@@ -90,4 +89,3 @@ public class LingeringPotionWetSponge extends CustomWetSponges{
     }
 
 }
-
