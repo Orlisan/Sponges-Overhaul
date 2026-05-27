@@ -1,7 +1,17 @@
 {
   "item.spongesoverhaul.sponge_block": "Schwamm",
   "item.spongesoverhaul.wet_sponge_block": "Nasser Schwamm",
-
   "item.spongesoverhaul.lava_sponge_block": "Lavaschwamm",
-  "item.spongesoverhaul.wet_lava_sponge_block": "Imprägnierter Lavaschwamm"
+  "item.spongesoverhaul.wet_lava_sponge_block": "Nasser Lavaschwamm",
+  "item.spongesoverhaul.fire_sponge_block": "Feuerschwamm",
+  "item.spongesoverhaul.wet_fire_sponge_block": "Nasser Feuerschwamm",
+  "item.spongesoverhaul.mob_sponge_block": "Mobschwamm",
+  "item.spongesoverhaul.wet_mob_sponge_block": "Nasser Mobschwamm",
+  "item.spongesoverhaul.snow_sponge_block": "Schneeschwamm",
+  "item.spongesoverhaul.wet_snow_sponge_block": "Nasser Schneeschwamm",
+  "item.spongesoverhaul.diamond_sponge_block": "Diamantschwamm",
+  "item.spongesoverhaul.wet_diamond_sponge_block": "Nasser Diamantschwamm",
+  "item.spongesoverhaul.lingering_potion_sponge_block": "Tränkschwamm",
+  "item.spongesoverhaul.wet_lingering_potion_sponge_block": "Nasser Tränkschwamm",
+  "itemGroup.spongesoverhaul.sponges_overhaul_tab": "Sponges Overhaul"
 }

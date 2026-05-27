@@ -1,7 +1,17 @@
 {
   "item.spongesoverhaul.sponge_block": "Spugna",
-  "item.spongesoverhaul.wet_sponge_block": "Spugna bagnata",
-
-  "item.spongesoverhaul.lava_sponge_block": "Spugna di lava",
-  "item.spongesoverhaul.wet_lava_sponge_block": "Spugna di lava impregnata"
+  "item.spongesoverhaul.wet_sponge_block": "Spugna Bagnata",
+  "item.spongesoverhaul.lava_sponge_block": "Spugna di Lava",
+  "item.spongesoverhaul.wet_lava_sponge_block": "Spugna di Lava Bagnata",
+  "item.spongesoverhaul.fire_sponge_block": "Spugna di Fuoco",
+  "item.spongesoverhaul.wet_fire_sponge_block": "Spugna di Fuoco Bagnata",
+  "item.spongesoverhaul.mob_sponge_block": "Spugna dei Mob",
+  "item.spongesoverhaul.wet_mob_sponge_block": "Spugna dei Mob Bagnata",
+  "item.spongesoverhaul.snow_sponge_block": "Spugna di Neve",
+  "item.spongesoverhaul.wet_snow_sponge_block": "Spugna di Neve Bagnata",
+  "item.spongesoverhaul.diamond_sponge_block": "Spugna di Diamante",
+  "item.spongesoverhaul.wet_diamond_sponge_block": "Spugna di Diamante Bagnata",
+  "item.spongesoverhaul.lingering_potion_sponge_block": "Spugna della Pozione",
+  "item.spongesoverhaul.wet_lingering_potion_sponge_block": "Spugna della Pozione Bagnata",
+  "itemGroup.spongesoverhaul.sponges_overhaul_tab": "Sponges Overhaul"
 }

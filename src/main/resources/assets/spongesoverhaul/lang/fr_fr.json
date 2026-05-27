@@ -1,7 +1,18 @@
 {
   "item.spongesoverhaul.sponge_block": "Éponge",
-  "item.spongesoverhaul.wet_sponge_block": "Éponge mouillée",
-
-  "item.spongesoverhaul.lava_sponge_block": "Éponge de lave",
-  "item.spongesoverhaul.wet_lava_sponge_block": "Éponge de lave imprégnée"
+  "item.spongesoverhaul.wet_sponge_block": "Éponge Mouillée",
+  "item.spongesoverhaul.lava_sponge_block": "Éponge de Lave",
+  "item.spongesoverhaul.wet_lava_sponge_block": "Éponge de Lave Mouillée",
+  "item.spongesoverhaul.fire_sponge_block": "Éponge de Feu",
+  "item.spongesoverhaul.wet_fire_sponge_block": "Éponge de Feu Mouillée",
+  "item.spongesoverhaul.mob_sponge_block": "Éponge à Mobs",
+  "item.spongesoverhaul.mob_sponge_block": "Éponge à Mobs",
+  "item.spongesoverhaul.wet_mob_sponge_block": "Éponge à Mobs Mouillée",
+  "item.spongesoverhaul.snow_sponge_block": "Éponge de Neige",
+  "item.spongesoverhaul.wet_snow_sponge_block": "Éponge de Neige Mouillée",
+  "item.spongesoverhaul.diamond_sponge_block": "Éponge de Diamant",
+  "item.spongesoverhaul.wet_diamond_sponge_block": "Éponge de Diamant Mouillée",
+  "item.spongesoverhaul.lingering_potion_sponge_block": "Éponge à Potion",
+  "item.spongesoverhaul.wet_lingering_potion_sponge_block": "Éponge à Potion Mouillée",
+  "itemGroup.spongesoverhaul.sponges_overhaul_tab": "Sponges Overhaul"
 }

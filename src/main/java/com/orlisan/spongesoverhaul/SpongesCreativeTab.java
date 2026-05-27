@@ -28,6 +28,8 @@ public class SpongesCreativeTab {
                             output.accept(SpongeBlocks.WET_SNOW_SPONGE_BLOCK);
                             output.accept(SpongeBlocks.DIAMOND_SPONGE_BLOCK);
                             output.accept(SpongeBlocks.WET_DIAMOND_SPONGE_BLOCK);
+                            output.accept(SpongeBlocks.LINGERING_POTION_SPONGE_BLOCK);
+                            output.accept(SpongeBlocks.WET_LINGERING_POTION_SPONGE_BLOCK);
                         })
                         .build()
         );

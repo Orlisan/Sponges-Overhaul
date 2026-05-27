@@ -1,7 +1,17 @@
 {
   "item.spongesoverhaul.sponge_block": "スポンジ",
   "item.spongesoverhaul.wet_sponge_block": "濡れたスポンジ",
-
   "item.spongesoverhaul.lava_sponge_block": "溶岩スポンジ",
-  "item.spongesoverhaul.wet_lava_sponge_block": "含浸した溶岩スポンジ"
+  "item.spongesoverhaul.wet_lava_sponge_block": "濡れた溶岩スポンジ",
+  "item.spongesoverhaul.fire_sponge_block": "炎のスポンジ",
+  "item.spongesoverhaul.wet_fire_sponge_block": "濡れた炎のスポンジ",
+  "item.spongesoverhaul.mob_sponge_block": "モブスポンジ",
+  "item.spongesoverhaul.wet_mob_sponge_block": "濡れたモブスポンジ",
+  "item.spongesoverhaul.snow_sponge_block": "雪のスポンジ",
+  "item.spongesoverhaul.wet_snow_sponge_block": "濡れた雪のスポンジ",
+  "item.spongesoverhaul.diamond_sponge_block": "ダイヤモンドスポンジ",
+  "item.spongesoverhaul.wet_diamond_sponge_block": "濡れたダイヤモンドスポンジ",
+  "item.spongesoverhaul.lingering_potion_sponge_block": "ポーションスポンジ",
+  "item.spongesoverhaul.wet_lingering_potion_sponge_block": "濡れたポーションスポンジ",
+  "itemGroup.spongesoverhaul.sponges_overhaul_tab": "Sponges Overhaul"
 }

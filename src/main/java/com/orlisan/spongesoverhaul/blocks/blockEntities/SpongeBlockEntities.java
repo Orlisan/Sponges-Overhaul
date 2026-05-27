@@ -33,7 +33,7 @@ public class SpongeBlockEntities {
                 FabricBlockEntityTypeBuilder.create(
                         CustomSpongeBlockEntity::new,
                         SpongeBlocks.spongeBlocks.toArray(new Block[0])
-                ).build()  // <-- passa il key qui
+                ).build() 
         );
         WET_CUSTOM_MOB_SPONGE_BLOCK_ENTITY = Registry.register(
                 BuiltInRegistries.BLOCK_ENTITY_TYPE,
@@ -41,7 +41,7 @@ public class SpongeBlockEntities {
                 FabricBlockEntityTypeBuilder.create(
                         WetMobCustomSpongeBlockEntity::new,
                         SpongeBlocks.WET_MOB_SPONGE_BLOCK
-                ).build()  // <-- passa il key qui
+                ).build()
         );
 
         ResourceKey<BlockEntityType<?>> simple_key = ResourceKey.create(
@@ -55,7 +55,7 @@ public class SpongeBlockEntities {
                 FabricBlockEntityTypeBuilder.create(
                         SimpleCustomSpongeBlockEntity::new,
                         SpongeBlocks.simpleSpongeBlocks.toArray(new Block[0])
-                ).build()  // <-- passa il key qui
+                ).build()
         );
     }
 }

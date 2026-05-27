@@ -1,7 +1,17 @@
 {
   "item.spongesoverhaul.sponge_block": "Esponja",
-  "item.spongesoverhaul.wet_sponge_block": "Esponja mojada",
-
-  "item.spongesoverhaul.lava_sponge_block": "Esponja de lava",
-  "item.spongesoverhaul.wet_lava_sponge_block": "Esponja de lava impregnada"
+  "item.spongesoverhaul.wet_sponge_block": "Esponja Mojada",
+  "item.spongesoverhaul.lava_sponge_block": "Esponja de Lava",
+  "item.spongesoverhaul.wet_lava_sponge_block": "Esponja de Lava Mojada",
+  "item.spongesoverhaul.fire_sponge_block": "Esponja de Fuego",
+  "item.spongesoverhaul.wet_fire_sponge_block": "Esponja de Fuego Mojada",
+  "item.spongesoverhaul.mob_sponge_block": "Esponja de Mobs",
+  "item.spongesoverhaul.wet_mob_sponge_block": "Esponja de Mobs Mojada",
+  "item.spongesoverhaul.snow_sponge_block": "Esponja de Nieve",
+  "item.spongesoverhaul.wet_snow_sponge_block": "Esponja de Nieve Mojada",
+  "item.spongesoverhaul.diamond_sponge_block": "Esponja de Diamante",
+  "item.spongesoverhaul.wet_diamond_sponge_block": "Esponja de Diamante Mojada",
+  "item.spongesoverhaul.lingering_potion_sponge_block": "Esponja de Poción",
+  "item.spongesoverhaul.wet_lingering_potion_sponge_block": "Esponja de Poción Mojada",
+  "itemGroup.spongesoverhaul.sponges_overhaul_tab": "Sponges Overhaul"
 }
