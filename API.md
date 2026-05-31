@@ -55,9 +55,8 @@ Block PETROL_SPONGE = Registry.register(BuiltInRegistries.BLOCK,
             ResourceKey.create(Registries.BLOCK,
                 Identifier.fromNamespaceAndPath("yourmodid", "petrol_sponge"))
         ),
-        PetrolFluid.class,   // the fluid class to absorb
-        PetrolBucketItem,    // item dropped when the sponge becomes wet
-        WET_PETROL_SPONGE    // the corresponding wet sponge block
+        PetrolFluid.class,  // the fluid class to absorb
+        WET_PETROL_SPONGE   // the corresponding wet sponge block
     )
 );
 
@@ -68,14 +67,19 @@ SpongeBlocks.spongeBlocks.add(PETROL_SPONGE);
 
 ## Creating a block sponge
 
-Use `SimpleCustomSponges` and pass the block class or a `TagKey<Block>` as the target:
+Use `SimpleCustomSponges` and pass a block class or a `TagKey<Block>` as the target:
 
 ```java
-new SimpleCustomSponges(
-    SpongeBlocks.spongeProperties.setId(...),
-    MyCustomBlock.class, // or a TagKey<Block>
-    MyDropItem,
-    WET_MY_SPONGE
+Block MY_SPONGE = Registry.register(BuiltInRegistries.BLOCK,
+    Identifier.fromNamespaceAndPath("yourmodid", "my_sponge"),
+    new SimpleCustomSponges(
+        SpongeBlocks.spongeProperties.setId(
+            ResourceKey.create(Registries.BLOCK,
+                Identifier.fromNamespaceAndPath("yourmodid", "my_sponge"))
+        ),
+        MyCustomBlock.class, // or a TagKey<Block>
+        WET_MY_SPONGE
+    )
 );
 
 SpongeBlocks.simpleSpongeBlocks.add(MY_SPONGE);
@@ -85,12 +89,12 @@ SpongeBlocks.simpleSpongeBlocks.add(MY_SPONGE);
 
 ## Custom range and capacity
 
-Both `CustomSponges` and `SimpleCustomSponges` accept optional `int` parameters at the end for custom range and capacity:
+Both classes accept optional `int` parameters at the end for custom range and capacity:
 
 ```java
-new CustomSponges(props, PetrolFluid.class, PetrolBucketItem, WET_PETROL_SPONGE, 512, 16);
-//                                                                                 ^    ^
-//                                                                             count  depth
+new CustomSponges(props, PetrolFluid.class, WET_PETROL_SPONGE, 512, 16);
+//                                                               ^    ^
+//                                                           count  depth
 ```
 
 Defaults are `count = 257` and `depth = 6`. These are multiplied by 8× and 4× respectively when the 2×2×2 cube mechanic activates.
@@ -102,7 +106,12 @@ Defaults are `count = 257` and `depth = 6`. These are multiplied by 8× and 4× 
 After registering both blocks as `BlockItem`, call `setDryVersion` on the wet sponge:
 
 ```java
-BlockItem dryItem = registerBlockItem("petrol_sponge", PETROL_SPONGE, false);
+BlockItem dryItem = new BlockItem(PETROL_SPONGE, new Item.Properties()
+    .setId(ResourceKey.create(Registries.ITEM,
+        Identifier.fromNamespaceAndPath("yourmodid", "petrol_sponge"))));
+Registry.register(BuiltInRegistries.ITEM,
+    Identifier.fromNamespaceAndPath("yourmodid", "petrol_sponge"), dryItem);
+
 ((CustomWetSponges) WET_PETROL_SPONGE).setDryVersion(dryItem);
 ```
 
