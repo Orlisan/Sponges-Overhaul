@@ -3,16 +3,16 @@
 	"id": "spongesoverhaul",
 	"version": "${version}",
 	"name": "Sponges Overhaul",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "This mod overhauls Minecraft Sponge mechanics",
 	"authors": [
-		"Me!"
+		"Orlisan"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
-	"license": "CC0-1.0",
-	"icon": "assets/spongesoverhaul/icon.png",
+	"license": "CC-BY-NC-4.0",
+	"icon": "assets/spongesoverhaul/logo.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [

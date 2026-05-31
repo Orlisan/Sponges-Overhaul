@@ -94,7 +94,7 @@
             WET_DIAMOND_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_diamond_sponge_block"),
                     new CustomWetSponges(wetSpongeProperties.setId(blockKey("wet_diamond_sponge_block")), ParticleTypes.DRIPPING_WATER, true));
             DIAMOND_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("diamond_sponge_block"),
-                    new CustomSponges(spongeProperties.setId(blockKey("diamond_sponge_block")), WaterFluid.class, Items.WATER_BUCKET, WET_DIAMOND_SPONGE_BLOCK, 16, 216));
+                    new CustomSponges(spongeProperties.setId(blockKey("diamond_sponge_block")), WaterFluid.class, Items.WATER_BUCKET, WET_DIAMOND_SPONGE_BLOCK, 512, 16));
             spongeBlocks.add(DIAMOND_SPONGE_BLOCK);
 
             //LINGERING POTION
