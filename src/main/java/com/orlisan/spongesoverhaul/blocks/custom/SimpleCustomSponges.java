@@ -70,14 +70,14 @@ public class SimpleCustomSponges extends CustomSponges {
         super(properties, types,  wetSponge);
     }
 
-    public SimpleCustomSponges(Properties properties, Block type, int... configurazioni) {
+    public SimpleCustomSponges(Properties properties, Block type, Block wetSponge, int... configurazioni) {
         super(properties, type, wetSponge, configurazioni);
     }
 
     public SimpleCustomSponges(Properties properties, Block type, Block wetSponge) {
-        super(properties, type,  wetSponge);
+        super(properties, type, wetSponge);
     }
-    public SimpleCustomSponges(Properties properties,  Block wetSponge) {
+    public SimpleCustomSponges(Properties properties, Block wetSponge) {
         super(properties, wetSponge);
     }
 
