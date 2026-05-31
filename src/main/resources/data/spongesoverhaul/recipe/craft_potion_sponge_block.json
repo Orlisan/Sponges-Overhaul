@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": "spongesoverhaul:sponge_block",
-    "X": "minecraft:potion"
+    "X": "minecraft:nether_wart"
   },
   "pattern": [
     " X ",
