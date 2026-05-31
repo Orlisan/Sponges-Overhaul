@@ -22,12 +22,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class WetMobSponge extends CustomWetSponges implements EntityBlock {
-    public WetMobSponge(Properties properties, BlockItem dryVersion, SimpleParticleType particleTypes) {
-        super(properties, dryVersion, particleTypes);
+    public WetMobSponge(Properties properties, BlockItem dryVersion, SimpleParticleType particleTypes, boolean dryOnNether) {
+        super(properties, dryVersion, particleTypes, dryOnNether);
     }
 
-    public WetMobSponge(Properties properties, SimpleParticleType particleTypes) {
-        super(properties, particleTypes);
+    public WetMobSponge(Properties properties, SimpleParticleType particleTypes, boolean dryOnNether) {
+        super(properties, particleTypes, dryOnNether);
     }
 
     @Override

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": "spongesoverhaul:sponge_block",
+    "X": "minecraft:snow_block"
+  },
+  "pattern": [
+    " X ",
+    "X#X",
+    " X "
+  ],
+  "result": {
+    "id": "spongesoverhaul:snow_sponge_block"
+  }
+}

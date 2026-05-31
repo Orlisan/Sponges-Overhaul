@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": "spongesoverhaul:sponge_block",
+    "X": "minecraft:potion"
+  },
+  "pattern": [
+    " X ",
+    "X#X",
+    " X "
+  ],
+  "result": {
+    "id": "spongesoverhaul:lingering_potion_sponge_block"
+  }
+}

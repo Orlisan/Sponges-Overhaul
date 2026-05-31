@@ -12,8 +12,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.Random;
 
 public class LingeringPotionWetSponge extends CustomWetSponges{
-    public LingeringPotionWetSponge(Properties properties) {
-        super(properties);
+    public LingeringPotionWetSponge(Properties properties, boolean dryOnNether) {
+        super(properties, dryOnNether);
     }
 
     public static final Random RANDOM = new Random();

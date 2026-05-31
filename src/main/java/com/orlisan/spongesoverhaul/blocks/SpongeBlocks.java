@@ -40,8 +40,8 @@
 
         public static ArrayList<Block> spongeBlocks = new ArrayList<>();
         public static ArrayList<Block> simpleSpongeBlocks = new ArrayList<>();
-        public static BlockBehaviour.Properties spongeProperties = BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.6F).sound(SoundType.SPONGE);
-        public static BlockBehaviour.Properties wetSpongeProperties = spongeProperties.sound(SoundType.WET_SPONGE);
+        public static BlockBehaviour.Properties spongeProperties = BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.6F).sound(SoundType.SPONGE).requiresCorrectToolForDrops();
+        public static BlockBehaviour.Properties wetSpongeProperties = spongeProperties.sound(SoundType.WET_SPONGE).requiresCorrectToolForDrops();
         private SpongeBlocks() {}
 
         private static ResourceKey<Block> blockKey(String name) {
@@ -57,49 +57,49 @@
         public static void register() {
             // WATER
             WET_WATER_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_sponge_block"),
-                    new CustomWetSponges(wetSpongeProperties.setId(blockKey("wet_sponge_block")), ParticleTypes.DRIPPING_WATER));
+                    new CustomWetSponges(wetSpongeProperties.setId(blockKey("wet_sponge_block")), ParticleTypes.DRIPPING_WATER, true));
             WATER_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("sponge_block"),
                     new CustomSponges(spongeProperties.setId(blockKey("sponge_block")), WaterFluid.class, Items.WATER_BUCKET, WET_WATER_SPONGE_BLOCK));
             spongeBlocks.add(WATER_SPONGE_BLOCK);
 
             // LAVA
             WET_LAVA_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_lava_sponge_block"),
-                    new CustomWetSponges(wetSpongeProperties.setId(blockKey("wet_lava_sponge_block")), ParticleTypes.DRIPPING_LAVA));
+                    new CustomWetSponges(wetSpongeProperties.setId(blockKey("wet_lava_sponge_block")), ParticleTypes.DRIPPING_LAVA, false));
             LAVA_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("lava_sponge_block"),
                     new CustomSponges(spongeProperties.setId(blockKey("lava_sponge_block")), LavaFluid.class, Items.LAVA_BUCKET, WET_LAVA_SPONGE_BLOCK));
             spongeBlocks.add(LAVA_SPONGE_BLOCK);
 
             // FIRE
             WET_FIRE_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_fire_sponge_block"),
-                    new CustomWetSponges(wetSpongeProperties.setId(blockKey("wet_fire_sponge_block")), ParticleTypes.FLAME));
+                    new CustomWetSponges(wetSpongeProperties.setId(blockKey("wet_fire_sponge_block")), ParticleTypes.FLAME, false));
             FIRE_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("fire_sponge_block"),
                     new SimpleCustomSponges(spongeProperties.setId(blockKey("fire_sponge_block")), BaseFireBlock.class, Items.FIRE_CHARGE, WET_FIRE_SPONGE_BLOCK));
             simpleSpongeBlocks.add(FIRE_SPONGE_BLOCK);
 
             // MOB
             WET_MOB_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_mob_sponge_block"),
-                    new WetMobSponge(wetSpongeProperties.setId(blockKey("wet_mob_sponge_block")), ParticleTypes.ANGRY_VILLAGER));
+                    new WetMobSponge(wetSpongeProperties.setId(blockKey("wet_mob_sponge_block")), ParticleTypes.ANGRY_VILLAGER, false));
             MOB_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("mob_sponge_block"),
                     new MobSponge(spongeProperties.setId(blockKey("mob_sponge_block")), EntityTypeTags.UNDEAD, Items.BONE, WET_MOB_SPONGE_BLOCK));
             simpleSpongeBlocks.add(MOB_SPONGE_BLOCK);
 
             //SNOW
             WET_SNOW_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_snow_sponge_block"),
-                    new CustomWetSponges(wetSpongeProperties.setId(blockKey("wet_snow_sponge_block")), ParticleTypes.ITEM_SNOWBALL));
+                    new CustomWetSponges(wetSpongeProperties.setId(blockKey("wet_snow_sponge_block")), ParticleTypes.ITEM_SNOWBALL, true));
             SNOW_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("snow_sponge_block"),
                     new SimpleCustomSponges(spongeProperties.setId(blockKey("snow_sponge_block")), BlockTags.SNOW, Items.SNOWBALL, WET_SNOW_SPONGE_BLOCK));
             simpleSpongeBlocks.add(SNOW_SPONGE_BLOCK);
 
             //DIAMOND
             WET_DIAMOND_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_diamond_sponge_block"),
-                    new CustomWetSponges(wetSpongeProperties.setId(blockKey("wet_diamond_sponge_block")), ParticleTypes.DRIPPING_WATER));
+                    new CustomWetSponges(wetSpongeProperties.setId(blockKey("wet_diamond_sponge_block")), ParticleTypes.DRIPPING_WATER, true));
             DIAMOND_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("diamond_sponge_block"),
                     new CustomSponges(spongeProperties.setId(blockKey("diamond_sponge_block")), WaterFluid.class, Items.WATER_BUCKET, WET_DIAMOND_SPONGE_BLOCK, 16, 216));
             spongeBlocks.add(DIAMOND_SPONGE_BLOCK);
 
             //LINGERING POTION
             WET_LINGERING_POTION_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("wet_lingering_potion_sponge_block"),
-                    new LingeringPotionWetSponge(wetSpongeProperties.setId(blockKey("wet_lingering_potion_sponge_block"))));
+                    new LingeringPotionWetSponge(wetSpongeProperties.setId(blockKey("wet_lingering_potion_sponge_block")), true));
             LINGERING_POTION_SPONGE_BLOCK = Registry.register(BuiltInRegistries.BLOCK, id("lingering_potion_sponge_block"),
                     new LingeringPotionSponge(spongeProperties.setId(blockKey("lingering_potion_sponge_block")), Items.LINGERING_POTION, WET_LINGERING_POTION_SPONGE_BLOCK));
             simpleSpongeBlocks.add(LINGERING_POTION_SPONGE_BLOCK);

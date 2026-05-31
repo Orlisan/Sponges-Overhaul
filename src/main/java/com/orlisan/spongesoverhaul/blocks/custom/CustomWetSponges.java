@@ -23,21 +23,25 @@ public class CustomWetSponges extends Block {
     public static BooleanProperty SOUL = BooleanProperty.create("soul");
     private BlockItem dryVersion = null;
     private SimpleParticleType particleTypes;
-    public CustomWetSponges(Properties properties, BlockItem dryVersion, SimpleParticleType particleTypes) {
+    private final boolean dryOnNether;
+    public CustomWetSponges(Properties properties, BlockItem dryVersion, SimpleParticleType particleTypes, boolean dryOnNether) {
         super(properties);
         this.dryVersion = dryVersion;
         this.particleTypes = particleTypes;
         this.registerDefaultState(this.stateDefinition.any().setValue(SOUL, false));
+        this.dryOnNether = dryOnNether;
     }
 
 
-    public CustomWetSponges(Properties properties, SimpleParticleType particleTypes) {
+    public CustomWetSponges(Properties properties, SimpleParticleType particleTypes, boolean dryOnNether) {
         super(properties);
         this.particleTypes = particleTypes;
         this.registerDefaultState(this.stateDefinition.any().setValue(SOUL, false));
+        this.dryOnNether = dryOnNether;
     }
-    public CustomWetSponges(Properties properties) {
+    public CustomWetSponges(Properties properties, boolean dryOnNether) {
         super(properties);
+        this.dryOnNether = dryOnNether;
     }
 
     @Override
@@ -54,7 +58,7 @@ public class CustomWetSponges extends Block {
     }
 
     protected void onPlace(final BlockState state, final Level level, final BlockPos pos, final BlockState oldState, final boolean movedByPiston) {
-        if ((Boolean)level.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pos)) {
+        if ((Boolean)level.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pos) && this.dryOnNether) {
             level.setBlock(pos, this.getDryVersion().getBlock().defaultBlockState(), 3);
             level.levelEvent(2009, pos, 0);
             level.playSound((Entity)null, pos, SoundEvents.WET_SPONGE_DRIES, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);

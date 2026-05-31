@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "cookingtime": 700,
+  "experience": 0.15,
+  "ingredient": "spongesoverhaul:wet_mob_sponge_block",
+  "result": {
+    "id": "spongesoverhaul:mob_sponge_block"
+  }
+}

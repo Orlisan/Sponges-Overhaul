@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "spongesoverhaul:sponge_block",
+    "spongesoverhaul:lava_sponge_block",
+    "spongesoverhaul:fire_sponge_block",
+    "spongesoverhaul:snow_sponge_block",
+    "spongesoverhaul:diamond_sponge_block",
+    "spongesoverhaul:mob_sponge_block",
+    "spongesoverhaul:lingering_potion_sponge_block",
+
+    "spongesoverhaul:wet_sponge_block",
+    "spongesoverhaul:wet_lava_sponge_block",
+    "spongesoverhaul:wet_fire_sponge_block",
+    "spongesoverhaul:wet_snow_sponge_block",
+    "spongesoverhaul:wet_diamond_sponge_block",
+    "spongesoverhaul:wet_mob_sponge_block",
+    "spongesoverhaul:wet_lingering_potion_sponge_block"
+  ]
+}

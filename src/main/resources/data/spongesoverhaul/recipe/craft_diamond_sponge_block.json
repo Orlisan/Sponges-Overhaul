@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": "spongesoverhaul:sponge_block",
+    "X": "minecraft:diamond"
+  },
+  "pattern": [
+    " X ",
+    "X#X",
+    " X "
+  ],
+  "result": {
+    "id": "spongesoverhaul:diamond_sponge_block"
+  }
+}

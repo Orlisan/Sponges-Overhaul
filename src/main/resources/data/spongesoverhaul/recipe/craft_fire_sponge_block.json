@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": "spongesoverhaul:sponge_block",
+    "X": "minecraft:fire_charge"
+  },
+  "pattern": [
+    " X ",
+    "X#X",
+    " X "
+  ],
+  "result": {
+    "id": "spongesoverhaul:fire_sponge_block"
+  }
+}
