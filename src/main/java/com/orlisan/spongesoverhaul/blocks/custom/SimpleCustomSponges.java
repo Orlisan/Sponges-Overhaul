@@ -54,6 +54,32 @@ public class SimpleCustomSponges extends CustomSponges {
     public SimpleCustomSponges(Properties properties, Item onOutput, Block wetSponge) {
         super(properties, onOutput, wetSponge);
     }
+    public SimpleCustomSponges(Properties properties, Class<?> fluidClass, Block wetSponge, int... configurazioni) {
+        super(properties, fluidClass, wetSponge, configurazioni);
+    }
+
+    public SimpleCustomSponges(Properties properties, Class<?> fluidClass,  Block wetSponge) {
+        super(properties, fluidClass, wetSponge);
+    }
+
+    public SimpleCustomSponges(Properties properties, TagKey<?> types, Block wetSponge, int... customCountAndDepth) {
+        super(properties, types,wetSponge, customCountAndDepth);
+    }
+
+    public SimpleCustomSponges(Properties properties, TagKey<?> types,  Block wetSponge) {
+        super(properties, types,  wetSponge);
+    }
+
+    public SimpleCustomSponges(Properties properties, Block type, int... configurazioni) {
+        super(properties, type, wetSponge, configurazioni);
+    }
+
+    public SimpleCustomSponges(Properties properties, Block type, Block wetSponge) {
+        super(properties, type,  wetSponge);
+    }
+    public SimpleCustomSponges(Properties properties,  Block wetSponge) {
+        super(properties, wetSponge);
+    }
 
     @Override
     protected void onPlace(final BlockState state, final @NotNull Level level, final @NotNull BlockPos pos, final BlockState oldState, final boolean movedByPiston) {

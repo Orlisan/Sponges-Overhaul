@@ -41,6 +41,21 @@ public class MobSponge extends SimpleCustomSponges {
     public MobSponge(Properties properties, TagKey<EntityType<?>> types, Item onOutput, Block wetSponge, int... customCountAndDepth) {
         super(properties, types, onOutput, wetSponge, customCountAndDepth);
     }
+    public MobSponge(Properties properties, Class<?> mobClass,  Block wetSponge, int... configurazioni) {
+        super(properties, mobClass,  wetSponge, configurazioni);
+    }
+
+    public MobSponge(Properties properties, TagKey<EntityType<?>> types,  Block wetSponge) {
+        super(properties, types,  wetSponge);
+    }
+
+    public MobSponge(Properties properties, Class<?> mobClass, Block wetSponge) {
+        super(properties, mobClass, wetSponge);
+    }
+
+    public MobSponge(Properties properties, TagKey<EntityType<?>> types, Block wetSponge, int... customCountAndDepth) {
+        super(properties, types, wetSponge, customCountAndDepth);
+    }
     @Override
     public void tryAbsorbWater(Level level, BlockPos pos) {
         if (!(level.getBlockEntity(pos) instanceof SimpleCustomSpongeBlockEntity blockEntity)) return;

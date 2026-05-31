@@ -14,6 +14,9 @@ public class LingeringPotionSponge extends SimpleCustomSponges {
     public LingeringPotionSponge(Properties properties, Item onOutput, Block wetSponge) {
         super(properties, onOutput, wetSponge);
     }
+    public LingeringPotionSponge(Properties properties, Block wetSponge) {
+        super(properties, wetSponge);
+    }
 
     @Override
     protected int removeWaterBreadthFirstSearchFalse(final Level level, final BlockPos startPos) {

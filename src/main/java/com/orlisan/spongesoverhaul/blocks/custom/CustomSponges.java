@@ -35,7 +35,7 @@ public class CustomSponges extends Block implements EntityBlock {
     protected TagKey<?> types = null;
     protected final boolean isATag;
     protected boolean isAClass = false;
-    protected final Item onOutput;
+    protected Item onOutput;
     protected final Block WET_SPONGE;
     protected Class<?> absorbThingClass = null;
     protected int CUSTOM_COUNT = 0;
@@ -99,6 +99,58 @@ public class CustomSponges extends Block implements EntityBlock {
         super(properties);
         isATag = false;
         this.onOutput = onOutPut;
+        this.WET_SPONGE = wetSponge;
+    }
+    public CustomSponges(Properties properties, Class<?> absorbThingClass, Block wetSponge, int... configurazioni) {
+        super(properties);
+        settaConfigurazioniCustom(configurazioni);
+        isATag = false;
+        this.WET_SPONGE = wetSponge;
+        this.absorbThingClass = absorbThingClass;
+        this.isAClass = true;
+    }
+
+    public CustomSponges(Properties properties, Class<?> absorbThingClass,  Block wetSponge) {
+        super(properties);
+        isATag = false;
+        this.WET_SPONGE = wetSponge;
+        this.absorbThingClass = absorbThingClass;
+        this.isAClass = true;
+    }
+
+    public CustomSponges(Properties properties, TagKey<?> types,  Block wetSponge, int... customCountAndDepth) {
+        super(properties);
+        settaConfigurazioniCustom(customCountAndDepth);
+        isATag = true;
+        this.types = types;
+        this.WET_SPONGE = wetSponge;
+    }
+
+    public CustomSponges(Properties properties, TagKey<?> types, Block wetSponge) {
+        super(properties);
+        isATag = true;
+        this.types = types;
+        this.WET_SPONGE = wetSponge;
+    }
+
+    public CustomSponges(Properties properties, Block type, Block wetSponge, int... configurazioni) {
+        super(properties);
+        settaConfigurazioniCustom(configurazioni);
+        isATag = false;
+        this.type = type;
+        this.WET_SPONGE = wetSponge;
+    }
+
+    public CustomSponges(Properties properties, Block type, Block wetSponge) {
+        super(properties);
+        isATag = false;
+        this.type = type;
+        this.WET_SPONGE = wetSponge;
+    }
+
+    public CustomSponges(Properties properties, Block wetSponge) {
+        super(properties);
+        isATag = false;
         this.WET_SPONGE = wetSponge;
     }
 
