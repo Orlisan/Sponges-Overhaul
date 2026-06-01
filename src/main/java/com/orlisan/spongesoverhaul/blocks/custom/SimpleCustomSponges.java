@@ -95,10 +95,10 @@ public class SimpleCustomSponges extends CustomSponges {
             }
             for (Direction dir : ALL_DIRECTIONS) {
                 if (level.getBlockEntity(pos.relative(dir)) instanceof SimpleCustomSpongeBlockEntity blockEntity) {
-                    blockEntity.MAX_COOLDOWN *= 2;
+                    blockEntity.MAX_COOLDOWN *= COOLDOWN_MOLTIPLICATORE;
                     blockEntity.resetCooldown();
                     if (level.getBlockEntity(pos) instanceof SimpleCustomSpongeBlockEntity myBlockEntity) {
-                        myBlockEntity.MAX_COOLDOWN *= 2;
+                        myBlockEntity.MAX_COOLDOWN *= COOLDOWN_MOLTIPLICATORE;
                         myBlockEntity.resetCooldown();
                     }
                 }

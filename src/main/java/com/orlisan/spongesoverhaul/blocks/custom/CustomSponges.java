@@ -198,7 +198,7 @@ public class CustomSponges extends Block implements EntityBlock {
     }
 
     ;
-
+public static final int COOLDOWN_MOLTIPLICATORE = 6;
     protected void onPlace(final BlockState state, final @NotNull Level level, final @NotNull BlockPos pos, final BlockState oldState, final boolean movedByPiston) {
         if (!oldState.is(state.getBlock()) && !movedByPiston) {
             if (level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity blockEntity) {
@@ -212,10 +212,10 @@ public class CustomSponges extends Block implements EntityBlock {
             }
             for (Direction dir : ALL_DIRECTIONS) {
                 if (level.getBlockEntity(pos.relative(dir)) instanceof CustomSpongeBlockEntity blockEntity) {
-                    blockEntity.MAX_COOLDOWN *= 2;
+                    blockEntity.MAX_COOLDOWN *= COOLDOWN_MOLTIPLICATORE;
                     blockEntity.resetCooldown();
                     if (level.getBlockEntity(pos) instanceof CustomSpongeBlockEntity myBlockEntity) {
-                        myBlockEntity.MAX_COOLDOWN *= 2;
+                        myBlockEntity.MAX_COOLDOWN *= COOLDOWN_MOLTIPLICATORE;
                         myBlockEntity.resetCooldown();
                     }
                 }
